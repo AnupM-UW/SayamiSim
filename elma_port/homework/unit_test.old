@@ -1,0 +1,583 @@
+#include "gtest/gtest.h"
+#include "robot.h"
+#include "stopwatch.h"
+#include <string>
+#include <iostream>
+#include <chrono>
+#include <thread>
+#include <json/nlohmann_json.h>
+
+using namespace std::chrono;
+using namespace elma;
+using json = nlohmann::json;
+
+double tolerance = 0.01;
+/*!!
+ * Here we use your StopWatch class to time something.
+ */
+TEST(Question1, StopWatch) {
+    Manager m;
+
+    Stopwatch watch = Stopwatch();
+
+    m.schedule(watch, 10_ms)
+    .init()
+    .start();
+
+    std::cout << watch.seconds() << std::endl;
+
+    m.emit(Event("start"));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+    EXPECT_NEAR(watch.seconds(), 0.5, tolerance);
+
+    std::cout << watch.seconds() << std::endl;
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+    EXPECT_NEAR(watch.seconds(), 1.0, tolerance);
+
+    std::cout << watch.seconds() << std::endl;
+
+    m.emit(Event("stop"));
+
+}
+
+TEST(Question1, StopWatch_SecondsCallBeforeStart) {
+    Manager m;
+
+    Stopwatch watch = Stopwatch();
+
+    m.schedule(watch, 10_ms)
+    .init()
+    .start();
+
+    EXPECT_NEAR(watch.seconds(), 0.0, tolerance);
+
+    std::cout << watch.seconds() << std::endl;
+
+}
+
+TEST(Question1, StopWatchReset) {
+    Manager m;
+
+    Stopwatch watch = Stopwatch();
+
+    m.schedule(watch, 10_ms)
+    .init()
+    .start();
+
+    EXPECT_NEAR(watch.seconds(), 0.0, tolerance);
+
+    std::cout << watch.seconds() << std::endl;
+
+    m.emit(Event("start"));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+    m.emit(Event("reset"));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+    EXPECT_NEAR(watch.seconds(), 0.5, tolerance);
+
+    std::cout << watch.seconds() << std::endl;
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+    EXPECT_NEAR(watch.seconds(), 1.0, tolerance);
+
+    std::cout << watch.seconds() << std::endl;
+
+    m.emit(Event("stop"));
+
+}
+
+TEST(Question1, StopWatchStartStop) {
+    Manager m;
+
+    Stopwatch watch = Stopwatch();
+
+    m.schedule(watch, 10_ms)
+    .init()
+    .start();
+
+    m.emit(Event("start"));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(300));
+
+    m.emit(Event("stop"));
+
+    EXPECT_NEAR(watch.seconds(), 0.3, tolerance);
+
+    std::cout << watch.seconds() << std::endl;
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+    EXPECT_NEAR(watch.seconds(), 0.3, tolerance);
+
+    std::cout << watch.seconds() << std::endl;
+
+    m.emit(Event("start"));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(400));
+
+    m.emit(Event("stop"));
+
+    EXPECT_NEAR(watch.seconds(), 0.7, tolerance);
+
+    std::cout << watch.seconds() << std::endl;
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+    EXPECT_NEAR(watch.seconds(), 0.7, tolerance);
+
+    std::cout << watch.seconds() << std::endl;
+
+}
+
+TEST(Question1, StopWatchSecondsWithoutStop) {
+    Manager m;
+
+    Stopwatch watch = Stopwatch();
+
+    m.schedule(watch, 10_ms)
+    .init()
+    .start();
+
+    m.emit(Event("start"));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+    EXPECT_NEAR(watch.seconds(), 1.0, tolerance);
+
+    std::cout << watch.seconds() << std::endl;
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1200));
+
+    EXPECT_NEAR(watch.seconds(), 2.2, tolerance);
+
+    std::cout << watch.seconds() << std::endl;
+
+    m.emit(Event("stop"));
+
+}
+
+TEST(Question1, StopWatchSecondsRepeatedEvents) {
+    Manager m;
+
+    Stopwatch watch = Stopwatch();
+
+    m.schedule(watch, 10_ms)
+    .init()
+    .start();
+
+    m.emit(Event("start"));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+    m.emit(Event("start"));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+    EXPECT_NEAR(watch.seconds(), 0.5, tolerance);
+
+    std::cout << watch.seconds() << std::endl;
+
+    m.emit(Event("stop"));
+    m.emit(Event("stop"));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    EXPECT_NEAR(watch.seconds(), 0.5, tolerance);
+
+    std::cout << watch.seconds() << std::endl;
+
+    m.emit(Event("stop"));
+    m.emit(Event("reset"));
+    m.emit(Event("reset"));
+
+    EXPECT_NEAR(watch.seconds(), 0.0, tolerance);
+
+    std::cout << watch.seconds() << std::endl;
+
+    m.emit(Event("start"));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    m.emit(Event("reset"));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1200));
+
+    EXPECT_NEAR(watch.seconds(), 1.2, tolerance);
+
+    std::cout << watch.seconds() << std::endl;
+
+    m.emit(Event("stop"));
+
+}
+
+/*!!
+ * Here we use your Robot class to give the robot
+ * a little trial and see what state its in.
+ *
+ * Variants of tests will include more than one robot,
+ * non-sense events, and varying event sequences.
+ */
+TEST(Question2, RobotEnvironment2) {
+
+    // create a new robot
+    Robot robot = Robot("What a very nice robot");
+    // Robot robot = Robot(); // << this should also work
+
+    // init manager
+    Manager m;
+    m.schedule(robot, 10_ms)
+    .init()
+    .start()
+    .emit(Event("start"));
+
+    string wander = "Wander";
+    string noise = "Make Noise";
+    string evade = "Evade";
+
+    /*
+     * Send signals to robot and test
+     */
+    std::cout << robot.current().name() << std::endl;
+    EXPECT_EQ(robot.current().name(), wander.c_str());
+
+    m.emit(Event("intruder detected"));
+    std::cout << robot.current().name() << std::endl;
+    EXPECT_EQ(robot.current().name(), noise.c_str());
+
+    m.emit(Event("proximity warning"));
+    std::cout << robot.current().name() << std::endl;
+    EXPECT_EQ(robot.current().name(), evade.c_str());
+
+    m.emit(Event("battery full"));
+    std::cout << robot.current().name() << std::endl;
+    EXPECT_EQ(robot.current().name(), evade.c_str());
+}
+
+TEST(Question2, RobotEnvironment1) {
+
+    // create a new robot
+    Robot robot = Robot("What a very nice robot");
+    // Robot robot = Robot(); // << this should also work
+
+    // init manager
+    Manager m;
+    m.schedule(robot, 10_ms)
+    .init()
+    .start()
+    .emit(Event("start"));
+
+
+    string wander = "Wander";
+    string noise = "Make Noise";
+    string evade = "Evade";
+}
+
+/*!!
+ * Here we will create various StateMachines and validate the JSON from the to_json method.
+ */
+TEST(Question3, to_json) {
+    /*
+     * coming soon... but this is straight-forward to test. At this point, you shouldn't
+     * need help writing tests for this one.
+     */
+
+    Robot robot = Robot("Save this bot");
+    // roundtripping
+
+    string js = robot.to_json().dump(4);
+
+    json js2;
+    EXPECT_NO_THROW(js2 = json::parse(js));
+
+    ASSERT_EQ(js, js2.dump(4));
+
+    // INSERT GRADING TESTS HERE 
+
+}
+
+TEST(Question3, to_json2) {
+    /*
+     * coming soon... but this is straight-forward to test. At this point, you shouldn't
+     * need help writing tests for this one.
+     */
+
+    Robot robot = Robot("Repeatable Robot");
+    string s1 = robot.to_json().dump();
+    string s2 = robot.to_json().dump();
+
+    ASSERT_EQ(s1, s2);
+    
+    // INSERT GRADING TESTS HERE 
+
+}
+
+/*!!
+ * Here we will test priority of watching events. Events with higher priority should always be
+ * executed before events of lower priority.
+ *
+ * Test variants will include testing various events of lower and higher priority.
+ */
+TEST(Question4, WatchPriority) {
+    Manager m;
+    vector<int> marbles;
+
+    Stopwatch watch = Stopwatch();
+
+    m.schedule(watch, 10_ms)
+    .init();
+
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 1 handler"<<endl;
+        marbles.push_back(1);
+    }, 1);
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 10 handler"<<endl;
+        marbles.push_back(10);
+    }, 10);
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 5 handler"<<endl;
+        marbles.push_back(5);
+    }, 5);
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 0 handler"<<endl;
+        marbles.push_back(0);
+    }, 0);
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 10 handler"<<endl;
+        marbles.push_back(10);
+    }, 10);
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 1 handler"<<endl;
+        marbles.push_back(1);
+    }, 1);
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Default pri (Pri 0) handler"<<endl;
+        marbles.push_back(0);
+    });
+
+    m.emit(Event("garble"));
+
+    EXPECT_EQ(marbles.size(), 7);
+    EXPECT_EQ(marbles.at(0), 10);
+    EXPECT_EQ(marbles.at(1), 10);
+    EXPECT_EQ(marbles.at(2), 5);
+    EXPECT_EQ(marbles.at(3), 1);
+    EXPECT_EQ(marbles.at(4), 1);
+    EXPECT_EQ(marbles.at(5), 0);
+    EXPECT_EQ(marbles.at(6), 0);
+
+    cout<<"Yippee!"<<endl;
+
+}
+
+TEST(Question4, WatchPriority2) {
+    Manager m;
+    vector<int> marbles;
+
+    Stopwatch watch = Stopwatch();
+
+    m.schedule(watch, 10_ms)
+    .init();
+
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 1 handler"<<endl;
+        marbles.push_back(1);
+    }, 1);
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 10 handler"<<endl;
+        marbles.push_back(10);
+    }, 10);
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 5 handler"<<endl;
+        marbles.push_back(5);
+    }, 5);
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 0 handler"<<endl;
+        marbles.push_back(0);
+    }, 0);
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 10 handler"<<endl;
+        marbles.push_back(10);
+    }, 10);
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 1 handler"<<endl;
+        marbles.push_back(1);
+    }, 1);
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Default pri (Pri 0) handler"<<endl;
+        marbles.push_back(0);
+    });
+
+    m.emit(Event("garble"));
+    m.emit(Event("garble"));
+
+    EXPECT_EQ(marbles.size(), 14);
+    EXPECT_EQ(marbles.at(0), 10);
+    EXPECT_EQ(marbles.at(1), 10);
+    EXPECT_EQ(marbles.at(2), 5); // don't check the others yet
+
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Default pri (Pri 0) handler"<<endl;
+        marbles.push_back(0);
+    });
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 2 handler"<<endl;
+        marbles.push_back(2);
+    }, 2);
+
+    // now there are 9 handlers
+    m.emit(Event("garble"));
+
+    // should be 7+7+9, i.e. 23 total
+    EXPECT_EQ(marbles.size(), 23);
+    EXPECT_EQ(marbles.at(0), 10);
+    EXPECT_EQ(marbles.at(1), 10);
+    EXPECT_EQ(marbles.at(2), 5);
+    EXPECT_EQ(marbles.at(3), 1);
+    EXPECT_EQ(marbles.at(4), 1);
+    EXPECT_EQ(marbles.at(5), 0);
+    EXPECT_EQ(marbles.at(6), 0);
+    EXPECT_EQ(marbles.at(7), 10);
+    EXPECT_EQ(marbles.at(8), 10);
+    EXPECT_EQ(marbles.at(9), 5);
+    EXPECT_EQ(marbles.at(10), 1);
+    EXPECT_EQ(marbles.at(11), 1);
+    EXPECT_EQ(marbles.at(12), 0);
+    EXPECT_EQ(marbles.at(13), 0);
+    EXPECT_EQ(marbles.at(14), 10);
+    EXPECT_EQ(marbles.at(15), 10);
+    EXPECT_EQ(marbles.at(16), 5);
+    EXPECT_EQ(marbles.at(17), 2);
+    EXPECT_EQ(marbles.at(18), 1);
+    EXPECT_EQ(marbles.at(19), 1);
+    EXPECT_EQ(marbles.at(20), 0);
+    EXPECT_EQ(marbles.at(21), 0);
+    EXPECT_EQ(marbles.at(22), 0);
+
+    cout<<"Yippee!"<<endl;
+
+}
+
+TEST(Question4, WatchPriority3) {
+    Manager m;
+    vector<int> marbles;
+
+    Stopwatch watch = Stopwatch();
+
+    m.schedule(watch, 10_ms)
+    .init();
+
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 1 handler"<<endl;
+        marbles.push_back(1);
+    }, 1);
+    watch.watch("garble2", [&] (Event&) {
+        cout<<"Pri 10 handler"<<endl;
+        marbles.push_back(10);
+    }, 10);
+    watch.watch("garble2", [&] (Event&) {
+        cout<<"Pri 5 handler"<<endl;
+        marbles.push_back(5);
+    }, 5);
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 0 handler"<<endl;
+        marbles.push_back(0);
+    }, 0);
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 10 handler"<<endl;
+        marbles.push_back(10);
+    }, 10);
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 1 handler"<<endl;
+        marbles.push_back(1);
+    }, 1);
+    watch.watch("garble", [&] (Event&) {
+        cout<<"Default pri (Pri 0) handler"<<endl;
+        marbles.push_back(0);
+    });
+
+    m.emit(Event("garble"));
+    m.emit(Event("garble2"));
+    m.emit(Event("start"));
+    m.emit(Event("garble"));
+    m.emit(Event("stop"));
+
+    // should be 5 + 2 + 5
+    EXPECT_EQ(marbles.size(), 12);
+    EXPECT_EQ(marbles.at(0), 10); // garble
+    EXPECT_EQ(marbles.at(1), 1);
+    EXPECT_EQ(marbles.at(2), 1);
+    EXPECT_EQ(marbles.at(3), 0);
+    EXPECT_EQ(marbles.at(4), 0);
+    EXPECT_EQ(marbles.at(5), 10); // garble2
+    EXPECT_EQ(marbles.at(6), 5);
+    EXPECT_EQ(marbles.at(7), 10); // garble
+    EXPECT_EQ(marbles.at(8), 1);
+    EXPECT_EQ(marbles.at(9), 1);
+    EXPECT_EQ(marbles.at(10), 0);
+    EXPECT_EQ(marbles.at(11), 0);
+
+    watch.watch("garble2", [&] (Event&) {
+        cout<<"Pri 5 handler"<<endl;
+        marbles.push_back(5);
+    }, 5);
+
+    m.emit(Event("garble2"));
+
+    // should be 5 + 2 + 5 + 3
+    EXPECT_EQ(marbles.size(), 15);
+    EXPECT_EQ(marbles.at(0), 10); // garble
+    EXPECT_EQ(marbles.at(1), 1);
+    EXPECT_EQ(marbles.at(2), 1);
+    EXPECT_EQ(marbles.at(3), 0);
+    EXPECT_EQ(marbles.at(4), 0);
+    EXPECT_EQ(marbles.at(5), 10); // garble2
+    EXPECT_EQ(marbles.at(6), 5);
+    EXPECT_EQ(marbles.at(7), 10); // garble
+    EXPECT_EQ(marbles.at(8), 1);
+    EXPECT_EQ(marbles.at(9), 1);
+    EXPECT_EQ(marbles.at(10), 0);
+    EXPECT_EQ(marbles.at(11), 0);
+    EXPECT_EQ(marbles.at(12), 10); // garble2
+    EXPECT_EQ(marbles.at(13), 5);
+    EXPECT_EQ(marbles.at(14), 5);
+
+    cout<<"Yippee!"<<endl;
+
+}
+
+TEST(Question4, WatchPriorityException) {
+    Manager m;
+    vector<int> marbles;
+
+    Stopwatch watch = Stopwatch();
+
+    m.schedule(watch, 10_ms)
+    .init();
+
+    EXPECT_NO_THROW(watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 1 handler"<<endl;
+        marbles.push_back(1);
+    })); // default, 0 priority, not a problem
+
+    EXPECT_ANY_THROW(watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 10 handler"<<endl;
+        marbles.push_back(10);
+    }, -1)); // -ve value
+
+    EXPECT_ANY_THROW(watch.watch("garble", [&] (Event&) {
+        cout<<"Pri 10 handler"<<endl;
+        marbles.push_back(10);
+    }, -1 * 1000)); // -ve value
+
+}
