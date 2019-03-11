@@ -18,7 +18,12 @@ The project goals are the following:
 - Keep a detailed event log that will be purged periodically based on available capacity. This will be implemented as a separate process.
 - Create documentation for the project
 
-Simulation detail:
+Success Criteria:
+---
+The success criteria for the project are as follows:
+- Flight Simulation with Raspberry Pi functional (restricted to X/Y axis with no vertical/horizontal movement)
+- Sensor/Actuator input from Raspberry Pi drives simulation
+- Sensor data is output in meaningful form.
 
 Installation
 ---
@@ -39,7 +44,7 @@ Following are the identified milestones for the project:
 
 Stretch Goals:
 - Use UDP to communicate the system data between multiple hosts.
-- Use a Windows program as a UDP listener. Gather the datagrams from the sender and display data on this separate computer.
+- Use a Windows program as a UDP listener. Gather the datagrams from the sender and display data on this separate computer. This will demonstrate platform neutrality of the project. Different devices can be used simultaneously via communication using UDP datagrams.
 
 
 
