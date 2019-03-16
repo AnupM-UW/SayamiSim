@@ -1,4 +1,4 @@
-#include <cairo.h>
+#include <cairo/cairo.h>
 #include <gtk/gtk.h>
 #include <math.h>
 #include <stdlib.h> 
@@ -8,14 +8,17 @@ GtkWidget *window, *darea;
 // cairo_t *cr;
 gdouble rotation = 0;
 int width, height;
+gint image_w, image_h;
 
 const double PI = 3.14150;
 const double PIOVER180 = 0.01745329;
+double rot = 0.5;
 
 static void do_drawing(cairo_t *);
 
 static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data)
 { 
+  printf("Draw");
   GtkWidget *win = gtk_widget_get_toplevel(widget);
   gtk_window_get_size(GTK_WINDOW(win), &width, &height);
   do_drawing(cr);
@@ -24,11 +27,16 @@ static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data
 
 static void do_drawing(cairo_t *cr)
 {
+    cairo_rectangle(cr, image_w/2-width/2, image_h/2-200, width, 200);
+    cairo_clip(cr);
+    cairo_translate(cr, image_w/2, image_h/2);
+    cairo_rotate(cr, rot); // radians
+    rot += 0.1;
+    cairo_translate(cr, -image_w/2, -image_h/2);
     cairo_set_source_surface(cr, sourceImage, 0, 0);
     cairo_paint(cr);
 }
 
-gint image_w, image_h;
 
 gboolean rotate_image_by(double degrees) {
     // Any rotation applied to cr here will be lost, as we create
@@ -51,7 +59,7 @@ gboolean rotate_clip() {
 
 void resizeRow(double factor, int* orig, int sizeOrig) {
     int newSize = floor(factor * sizeOrig);
-    int* newSizeArr = calloc(newSize, sizeof(int));
+    int* newSizeArr = (int*) calloc(newSize, sizeof(int));
     
 }
 
@@ -105,14 +113,14 @@ int main(int argc, char *argv[])
     // double degrees = 0;
     // int speed = 125;
     sourceImage = cairo_image_surface_create_from_png("test.png");
-    image_w = cairo_image_surface_get_width(image);
-    image_h = cairo_image_surface_get_height(image);
+    image_w = cairo_image_surface_get_width(sourceImage);
+    image_h = cairo_image_surface_get_height(sourceImage);
 
     gtk_init(&argc, &argv);
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     darea = gtk_drawing_area_new();
-    gtk_container_add(GTK_WINDOW(window), darea);
+    gtk_container_add(GTK_CONTAINER(window), darea);
 
     g_signal_connect(G_OBJECT(darea), "draw", G_CALLBACK(on_draw_event), NULL); 
     // g_signal_connect(window, "expose-event", G_CALLBACK (on_expose_event), NULL);
