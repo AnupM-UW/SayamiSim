@@ -3,7 +3,12 @@
 
 #include <string>
 #include <vector>
+
+#ifdef _RPI_
 #include <json/nlohmann_json.h>
+#else
+#include <json/json.h>
+#endif
 
 using std::string;
 using std::vector;

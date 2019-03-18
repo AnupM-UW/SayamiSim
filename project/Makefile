@@ -54,8 +54,8 @@ spotless: clean
 	@$(RM) -rf build bin html latex
 
 #Link
-$(TARGETDIR)/$(TARGET): $(OBJECTS) $(HEADERS)
-	$(CC) $(CFLAGS) $(INCLUDE) $< $(LIBDIR) $(LIB) -o $(TARGETDIR)/$(TARGET) $^ $(LIB)
+$(TARGETDIR)/$(TARGET): $(OBJECTS)
+	$(CC) $(CFLAGS) $(INCLUDE) $(LIBDIR) $(LIB) -o $(TARGETDIR)/$(TARGET) $^ $(LIB)
 
 #Compile
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT) $(HEADERS) $(ELMALIB)

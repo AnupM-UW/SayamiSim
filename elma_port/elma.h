@@ -23,7 +23,10 @@
 #include "transition.h"
 #include "state_machine.h"
 
+#ifdef _RPI_
 #include <json/nlohmann_json.h>
-
+#else
+#include <json/json.h>
+#endif
 
 #endif

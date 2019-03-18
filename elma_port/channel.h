@@ -3,7 +3,12 @@
 
 #include <string>
 #include <deque>
+
+#ifdef _RPI_
 #include <json/nlohmann_json.h>
+#else
+#include <json/json.h>
+#endif
 
 #include "elma.h"
 
