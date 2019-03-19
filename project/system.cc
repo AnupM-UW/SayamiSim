@@ -7,7 +7,7 @@ using namespace std;
 System::System() : System("unnamed system") {}
 
 System::System(string name) : Process(name),
-    _lat(0), _long(0), _altitude(10000), _heading(0.0), _controllerChannel(NULL), _attitudeChannel(NULL) {
+    _lat(0), _long(0), _altitude(10000), _heading(0.0), _controllerChannel(NULL), _attitudeChannel(NULL), _aoa(0.0) {
     
 }
 
@@ -24,24 +24,43 @@ void System::update() {
     if (_controllerChannel->nonempty()) {
         // update attitude
         json val = _controllerChannel->latest();
-        double v = val["controllerpos"];
+        int v = val["controllerPosX"];
+        int a = val["controllerPosY"];
         update_heading(v);
+        update_aoa(a);
     }
     json attitude;
     attitude["lat"] = _lat;
     attitude["long"] = _long;
     attitude["alt"] = _altitude;
     attitude["hdg"] = _heading;
+    attitude["aoa"] = _aoa;
 
     _attitudeChannel->send(attitude);
 }
 
-void System::update_heading(double controllerInput) {
-    // note that here the controller input will cause rotation about yaw axis (a bit counterintuitive if you expected roll instead of yaw)
-    double relativeInput = controllerInput - 512; // 512 is neutral position
+void System::update_heading(int controllerInput) {
+    // note that here the controller input will cause rotation about yaw axis (a bit counterintuitive if you expected roll instead of yaw as in most joysticks and flight sims)
+    // this is temporary since we don't have the yaw/rudder axis on the two axis analog joystick for RPi.
+    int relativeInput = controllerInput - 512; // 512 is neutral position
     // in one cycle, i.e. in the period of System (50 ms), a full deflection of the controller
     // will cause 5 deg rotation
-    _heading += relativeInput/(double)512 * 5;
+    _heading += (double)relativeInput/(double)512 * 5;
+
+    if (_heading > 360) { 
+        _heading -= 360; 
+    }
+}
+
+void System::update_aoa(int controllerInput) {
+    // the controller y-input will cause rotation about pitch axis
+    int relativeInput = controllerInput - 512; // 512 is neutral position
+    // in one cycle, i.e. in the period of System (50 ms), a full deflection of the controller in y-axis will cause pitch rotation of 4 deg
+    _aoa += (double)relativeInput/(double)512 * 4;
+
+    if (_aoa > 180) { 
+        _aoa -= 360; 
+    }
 }
 
 void System::stop() {}

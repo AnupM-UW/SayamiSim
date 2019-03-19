@@ -28,11 +28,13 @@ using namespace std;
 
         private:
 
-            void update_heading(double);
+            void update_heading(int);
+            void update_aoa(int);
 
             double _lat, _long;
             double _altitude;
-            double _heading;
+            double _aoa;                // angle of attack
+            double _heading;            // heading in degrees
             Channel* _controllerChannel;
             Channel* _attitudeChannel;
 
