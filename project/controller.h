@@ -14,13 +14,13 @@ class Controller : public Process {
         Controller();
 
         Controller(string name);
-        
+
         void init();
-        
+
         void start();
-        
+
         void update();
-        
+
         void stop();
 
     private:

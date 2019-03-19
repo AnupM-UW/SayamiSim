@@ -16,6 +16,7 @@ void Controller::init() {
     if (_controllerChannel == nullptr) {
         throw std::runtime_error("Controller channel not found.");
     }
+    
 
 }
 
@@ -40,6 +41,7 @@ double Controller::get_controller_pos() {
     #ifdef TEST_CTRL_POS
     val = (double)(rand() % 1024 + 1);
     #else
+    
     val = 512;
     #endif
     return val;
