@@ -1,3 +1,7 @@
+
+#Architecture
+ARCH := $(shell uname -m)
+
 #Compilers
 CC          := g++ -std=c++14
 DGEN        := doxygen
@@ -12,8 +16,16 @@ BUILDDIR    := ./build
 TARGETDIR   := ./bin
 SRCEXT      := cc
 
+
+# RPi defines
+ifeq ($(ARCH),armv7l)
+        RPI := -D_RPI_
+else
+        RPI := -D_NOTRPI_
+endif
+
 #Flags, Libraries and Includes
-CFLAGS      := -fsanitize=address -ggdb
+CFLAGS      := -fsanitize=address -ggdb $(_RPI_)
 LIB         := -lpthread -lelma -lgtest
 INC         := -I$(INCDIR) -I$(INCDIR)/elma_port
 INCDEP      := -I$(INCDIR)
