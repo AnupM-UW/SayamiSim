@@ -17,8 +17,8 @@ double rot = 0.5;
 static void do_drawing(cairo_t *);
 
 static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data)
-{ 
-  printf("Draw");
+{
+  // printf("Draw");
   GtkWidget *win = gtk_widget_get_toplevel(widget);
   gtk_window_get_size(GTK_WINDOW(win), &width, &height);
   do_drawing(cr);
@@ -27,7 +27,16 @@ static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data
 
 static void do_drawing(cairo_t *cr)
 {
-    cairo_rectangle(cr, image_w/2-width/2, image_h/2-200, width, 200);
+    cairo_rectangle (cr, 0, 0, width, height/2);
+    cairo_set_source_rgba (cr, 0.1, 0.1, 0.76, 0.80);
+    cairo_fill (cr);
+    cairo_rectangle (cr, 0, 0, image_w/2-200, height);
+    cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1);
+    cairo_fill (cr);
+    cairo_rectangle (cr, image_w/2 + 200, 0, 300, height);
+    cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1);
+    cairo_fill (cr);
+    cairo_rectangle(cr, image_w/2-200, image_h/2-200, 400, 200);
     cairo_clip(cr);
     cairo_translate(cr, image_w/2, image_h/2);
     cairo_rotate(cr, rot); // radians
