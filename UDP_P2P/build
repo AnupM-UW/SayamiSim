@@ -2,5 +2,5 @@
 # g++ -o ADCmulti ADCmulti.cpp bus/SPIDevice.cpp bus/BusDevice.cpp
 # g++ -O3 -o ADCmulti2 ADCmulti2.cpp bus/SPIDevice.cpp bus/BusDevice.cpp
 # g++ -o ADCExample ADCExample.cpp bus/SPIDevice.cpp bus/BusDevice.cpp
-g++ -o UDPmultsrv main.cpp
+g++ -o UDP_p2p main.cpp
 
