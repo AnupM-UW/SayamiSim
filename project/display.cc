@@ -7,7 +7,7 @@ using namespace std;
 gdouble Display::_rotation = 0.0;
 
 // cairo pieces
-cairo_surface_t *_sourceImage;
+cairo_surface_t *_sourceImage, *_fgImage;
 GtkWidget *_window = NULL,
           *_darea  = NULL;
 
@@ -16,6 +16,8 @@ int _height;
 
 gint _image_w; // source image width/height
 gint _image_h;
+
+gint fg_image_w, fg_image_h;
 
 Display::Display() : Display("unnamed Display") {}
 
@@ -39,8 +41,11 @@ void wndproc() {
 
     cout<<"Inited"<<endl;
     _sourceImage = cairo_image_surface_create_from_png("test.png");
+    _fgImage = cairo_image_surface_create_from_png("kisspng-A330-aircraft-cockpit2.png");
     _image_w = cairo_image_surface_get_width(_sourceImage);
     _image_h = cairo_image_surface_get_height(_sourceImage);
+    fg_image_w = cairo_image_surface_get_width(_fgImage);
+    fg_image_h = cairo_image_surface_get_height(_fgImage);
 
     _window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     _darea = gtk_drawing_area_new();
@@ -51,7 +56,7 @@ void wndproc() {
     g_signal_connect(_window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
 
     gtk_window_set_position(GTK_WINDOW(_window), GTK_WIN_POS_CENTER);
-    gtk_window_set_default_size(GTK_WINDOW(_window), 800, 600);
+    gtk_window_set_default_size(GTK_WINDOW(_window), 800, 400);
     gtk_window_set_title(GTK_WINDOW(_window), "SayamiSim Window");
     gtk_widget_show_all(_window);
 
@@ -66,19 +71,30 @@ void wndproc() {
 
 void do_drawing(cairo_t *cr) {
     // draw frame
-    cout<<"Drawing"<<endl;
+    //// cout<<"Drawing"<<endl;
 
     cairo_rectangle (cr, 0, 0, _width, _height/2);
-    cairo_set_source_rgba (cr, 0.1, 0.1, 0.76, 0.80);
+    cairo_pattern_t *sky;
+    sky = cairo_pattern_create_linear(20.0, 0.0, 20.0, 160.0);
+
+    cairo_pattern_add_color_stop_rgb(sky, 0.1, 0.2, 0.2, 0.86);
+    cairo_pattern_add_color_stop_rgb(sky, 0.5, 0.5, 0.5, 1);
+    cairo_set_source (cr, sky);
     cairo_fill (cr);
+
     cairo_rectangle (cr, 0, 0, _image_w/2-200, _height);
     cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1);
     cairo_fill (cr);
     cairo_rectangle (cr, _image_w/2 + 200, 0, 300, _height);
     cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1);
     cairo_fill (cr);
+    // cairo_scale(cr, 0.1, 0.1);
+    // cairo_set_source_surface(cr, _fgImage, _width/2 - 100, _height/2 + 250);
+    // cairo_paint(cr);
 
-    cairo_rectangle(cr, _image_w/2-200, _image_h/2-200, 400, 200);
+    cairo_save(cr); // save current transform stack
+
+    cairo_rectangle(cr, _image_w/2-200, _image_h/2-150, 400, 150);
     cairo_clip(cr);
 
     //// do_perspective_scale(cr);
@@ -88,17 +104,32 @@ void do_drawing(cairo_t *cr) {
     cairo_translate(cr, -_image_w/2, -_image_h/2);
     cairo_set_source_surface(cr, _sourceImage, 0, 0);
     cairo_paint(cr);
+
+    cairo_rectangle(cr, 0, 0, 800, 600);
+    cairo_clip(cr);
+
+    // cairo_t *fg = cairo_create(_fgImage);
+    // cairo_translate(cr, -_image_w/2, -_image_h/2);
+    // cairo_rotate(cr, -Display::rotation());
+    // cairo_translate(cr, _image_w/2, _image_h/2);
+
+    cairo_restore(cr); // restore saved transform stack
+    cairo_scale(cr, 0.1, 0.1);
+    cairo_set_source_surface(cr, _fgImage, _width/2 + 800, _height/2 + 1750);
+    cairo_paint(cr);
+    // cairo_destroy(fg);
+
     cout<<"Finished Drawing"<<endl;
 
 }
 
 gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
-    cout<<"Drawing: "<<widget<<endl;
+    //// cout<<"Drawing: "<<widget<<endl;
 
     GtkWidget *win = gtk_widget_get_toplevel(widget);
-    cout<<"Drawing: "<<widget<<endl;
+    //// cout<<"Drawing: "<<widget<<endl;
     gtk_window_get_size(GTK_WINDOW(win), &_width, &_height);
-    cout<<"Drawing: "<<widget<<endl;
+    //// cout<<"Drawing: "<<widget<<endl;
     do_drawing(cr);
     return FALSE;
 }
