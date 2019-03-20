@@ -1,6 +1,8 @@
-# RPi defines ifeq ($(ARCH),armv7l)         RPI := -D_RPI_ else         RPI := -D_NOTRPI_ endif
 #Architecture
 ARCH := $(shell uname -m)
+
+#cairo
+CAIRO_BLD = `pkg-config --cflags --libs gtk+-3.0`
 
 #Compilers
 CC          := g++ -std=c++14
@@ -16,16 +18,17 @@ BUILDDIR    := ./build
 TARGETDIR   := ./bin
 SRCEXT      := cc
 
-
-# RPi defines
+#Asan library and RPi Def
 ifeq ($(ARCH),armv7l)
-        RPI := -D_RPI_
+        ASAN := -static-libasan
+        RPI  := -D_RPI_
 else
-        RPI := -D_NOTRPI_
+        ASAN := -lasan
+        RPI  := -D_NOTRPI_
 endif
 
 #Flags, Libraries and Includes
-CFLAGS      := -fsanitize=address -ggdb $(RPI)
+CFLAGS      := -ggdb $(RPI)
 LIB         := -lpthread -lelma -lgtest
 INC         := -I$(INCDIR) -I$(INCDIR)/elma_port
 INCDEP      := -I$(INCDIR)
@@ -67,11 +70,11 @@ spotless: clean
 
 #Link
 $(TARGETDIR)/$(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) $(INCLUDE) $(LIBDIR) $(LIB) -o $(TARGETDIR)/$(TARGET) $^ $(LIB)
+	$(CC) $(CFLAGS) $(INCLUDE) $(LIBDIR) $(LIB) -o $(TARGETDIR)/$(TARGET) $^ $(LIB) $(CAIRO_BLD)
 
 #Compile
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT) $(HEADERS) $(ELMALIB)
-	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
+	$(CC) $(CFLAGS) $(INC) -c -o $@ $< $(CAIRO_BLD)
 
 #	$(TARGETDIR)/%: %.cc $(ELMALIB)
 #	$(CC) $(CFLAGS) $(INCLUDE) $< $(LIBDIR) $(LIB) -o $@

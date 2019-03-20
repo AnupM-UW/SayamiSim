@@ -39,7 +39,9 @@ SPIDevice::SPIDevice(unsigned int bus, unsigned int device):
 	this->bits = 8;
 	this->speed = 488000;
 	this->delay = 0;
-	this->open();
+	if (this->open() != 0) {
+          cout << "ERR OPENING FILE"<<endl;
+        }
 }
 
 /**
@@ -70,6 +72,7 @@ int SPIDevice::transfer(unsigned char send[], unsigned char receive[], int lengt
 	struct spi_ioc_transfer	transfer;
 	transfer.tx_buf = (unsigned long) send;
 	transfer.rx_buf = (unsigned long) receive;
+        cout<<"AS: "<<transfer.tx_buf<<","<<transfer.rx_buf<<endl;
 	transfer.len = length;
 	transfer.speed_hz = this->speed;
 	transfer.bits_per_word = this->bits;
@@ -77,7 +80,9 @@ int SPIDevice::transfer(unsigned char send[], unsigned char receive[], int lengt
 	transfer.pad = 0;
 	int status = ioctl(this->file, SPI_IOC_MESSAGE(1), &transfer);
 	if (status < 0) {
-		perror("SPI: Transfer SPI_IOC_MESSAGE Failed");
+                string msg = string("SPI: Transfer SPI_IOC_MESSAGE Failed: ")
+                    + to_string(status);
+                perror (msg.c_str());
 		return -1;
 	}
 	return status;

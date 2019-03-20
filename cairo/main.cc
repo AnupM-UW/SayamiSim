@@ -107,8 +107,8 @@ static void do_perspective_scale(cairo_t* cr) {
     int stride = cairo_image_surface_get_stride (doppelSurface);
     // cairo_surface_flush (doppelSurface);
 
-    ptr = (unsigned char*)malloc (stride * height);
-    memcpy (ptr, cairo_image_surface_get_data (doppelSurface), stride * height);
+    ptr = (unsigned char*)malloc (stride * pxheight);
+    memcpy (ptr, cairo_image_surface_get_data (doppelSurface), stride * pxheight);
 
     cairo_surface_t *image = cairo_image_surface_create_for_data (ptr,
                                   CAIRO_FORMAT_ARGB32, pxwidth, pxheight, stride);
@@ -152,7 +152,6 @@ static void do_perspective_scale(cairo_t* cr) {
             //     *((unsigned int*) &ptr [y * stride + x * 4]) = z;
             //        }
         }
-    }
 
     rot += 0.1;
     // doppelSurface contains the rotated image now
@@ -164,6 +163,7 @@ static void do_perspective_scale(cairo_t* cr) {
     cairo_paint(cr);
     cairo_surface_destroy(doppelSurface);
     cairo_surface_destroy(image);
+    cairo_destroy(ic);
 }
 
 static void do_drawing(cairo_t *cr) {
@@ -181,7 +181,8 @@ static void do_drawing(cairo_t *cr) {
     cairo_rectangle(cr, image_w/2-200, image_h/2-200, 400, 200);
     cairo_clip(cr);
 
-    // do_perspective_scale(cr);
+    //// do_perspective_scale(cr);
+
     cairo_translate(cr, image_w/2, image_h/2);
     cairo_rotate(cr, rot); // radians
     cairo_translate(cr, -image_w/2, -image_h/2);
@@ -259,13 +260,13 @@ void resizeRow(double factor, int* orig, int sizeOrig) {
 // }
 
 static gboolean time_handler(GtkWidget *widget)
-{  
+{
   gtk_widget_queue_draw(widget);  
   return TRUE;
 }
 
 int main(int argc, char *argv[])
-{   
+{
     // double degrees = 0;
     // int speed = 125;
     sourceImage = cairo_image_surface_create_from_png("test.png");
