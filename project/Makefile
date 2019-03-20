@@ -2,6 +2,9 @@
 #Architecture
 ARCH := $(shell uname -m)
 
+#cairo
+CAIRO_BLD = `pkg-config --cflags --libs gtk+-3.0`
+
 #Compilers
 CC          := g++ -std=c++14
 DGEN        := doxygen
@@ -70,11 +73,11 @@ spotless: clean
 
 #Link
 $(TARGETDIR)/$(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) $(INCLUDE) $(LIBDIR) $(LIB) -o $(TARGETDIR)/$(TARGET) $^ $(LIB)
+	$(CC) $(CFLAGS) $(INCLUDE) $(LIBDIR) $(LIB) -o $(TARGETDIR)/$(TARGET) $^ $(LIB) $(CAIRO_BLD)
 
 #Compile
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT) $(HEADERS) $(ELMALIB)
-	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
+	$(CC) $(CFLAGS) $(INC) -c -o $@ $< $(CAIRO_BLD)
 
 #	$(TARGETDIR)/%: %.cc $(ELMALIB)
 #	$(CC) $(CFLAGS) $(INCLUDE) $< $(LIBDIR) $(LIB) -o $@

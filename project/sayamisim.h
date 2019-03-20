@@ -24,7 +24,7 @@ class SayamiSim {
         SayamiSim();
         void run();
         void run(high_resolution_clock::duration duration);
-        
+
     private:
         Manager _mgr;
         Servo _servo;

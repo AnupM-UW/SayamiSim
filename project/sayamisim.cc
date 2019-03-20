@@ -1,5 +1,6 @@
 #include "sayamisim.h"
 
+Display* currentDisplay;
 
 SayamiSim::SayamiSim() : 
                 _mgr(), 
@@ -9,6 +10,7 @@ SayamiSim::SayamiSim() :
                 _system("system"), 
                 _controllerChannel("controller"),
                 _attitudeChannel("attitude") {
+    ::currentDisplay = &_display;
     _mgr
     .schedule(_controller, 100_ms)
     .schedule(_system, 50_ms)
