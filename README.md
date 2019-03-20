@@ -1,11 +1,19 @@
 # SayamiSim
 
-Flight Simulation Framework for Raspberry Pi Using Elma Event Loop and Process Manager Framework
+UDP Based Flight Simulation Framework for Raspberry Pi Using Elma Event Loop and Process Manager Framework
 ---
 
-This project is to create a simulation framework using Raspberry Pi. The simulation will be for a barebones flight simulator. The project will require access to sensors and actuators (joystick, servo) on a Raspberry Pi. Data will be transferred to separate receiving processes from the sender process for further consumption.
+This project is to create a simulation framework using Raspberry Pi. It is a distributed Flight Simulator program where data is sent over UDP to different client computers. The simulation itself is a barebones flight simulator, but it is meant to be improved with flight dynamics at a later date. 
 
-The idea behind this flight simulator is to have separate hosts that communicate together, not only for multiplayer play, but also as a collaborative flight simulator where multiple pilots can together fly a plane. In addition, multiple device peripherals (e.g. panels) can listen to the same data in a plug-in fashion and display flight data. One can imagine peripherals/panels that run on separate microcontrollers, e.g. a separate airspeed indicator, Comm Radio or HSI. See [here](https://xforcepc.com/english/flight-simulation/saitek-x-plane-peripherals.html) for examples of panels created for the X-Plane simulator.  Initially all process will be on the same device, but once mature, we can have this plugin architecture enabled.
+The project will makes use of sensors and actuators (joystick, servo) on a Raspberry Pi using PWM and SPI bus for joystick and servo control. Using the Elma framework, data is transferred to separate receiving processes from the sender process for further consumption. Processes include a system controller (for flight dynamics), joystick controller, servo controller, UDP networking processor and data logger process.
+
+The core idea behind this flight simulator is to have separate hosts that communicate together, not only for multiplayer play, but also as a collaborative flight simulator (where multiple pilots can together fly a plane). In addition, multiple device peripherals (e.g. panels) can listen to the simulator data in a plug-in fashion and display flight data. One can imagine peripherals/panels that run on separate microcontrollers, e.g. a separate airspeed indicator, Comm Radio or HSI. See [here](https://xforcepc.com/english/flight-simulation/saitek-x-plane-peripherals.html) for examples of panels created for the X-Plane simulator. 
+
+With the UDP based communication, and a plugin architecture enabled, we are able to view flight data on different computers. In our case, the simulator itself is running on Raspberry Pi, but data is sent over UDP to a Windows 10 computer that displays the state of the sensors (in our case, the heading of the flight displayed as a compass rose).
+
+UDP P2P client running on Windows (note, UDP multicast was not supported by my router):
+
+![UDP communication between RPi and Windows](UDPClientServerSUCCESS.png)
 
 The full dynamics of the system will not be simulated at first. Only basic flight characteristics will be simulated (yaw axis, and possibly pitch). The goal is to have the interface defined so that classes can later be swapped out to do more advanced modeling.
 

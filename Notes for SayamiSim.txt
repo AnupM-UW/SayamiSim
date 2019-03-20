@@ -1,0 +1,28 @@
+UDP multicast groups vs P2P:
+        // derived from:
+        // http://www.jarloo.com/c-udp-multicasting-tutorial/
+        // 
+
+        // Note that the router has to support multicast over UDP. You can enable it from QoS settings for NetGear
+        // routers. My router did not support it, so I cannot use UDP over multicast, and I have to use UDP P2P
+        // see:
+        //   https://www.techwalla.com/articles/how-to-enable-multicast-upnp-technology-on-a-netgear-wndr3300-router
+        //
+UDP can be used for comms in Peer to Peer (P2P), multicast (1:many) or broadcast (1:all) mode (IPv4 only for broadcast). Your router has to support multicast/broadcast, otherwise it will not create multicast/broadcast groups. Even if your router supports it, you may have to log in to your router (e.g. http://192.168.1.1) and enable it in the firmware.
+For me, since my router did not support multicast UDP groups, multicast was not possible although it is the best strategy for my project (1 simulator, multiple listeners). 
+
+You can still create multiple P2P UDP sessions, but it means you have to know IP addresses before hand (especially since the IP address is dynamically assigned using DHCP) and this is a bit difficult if the IP address lease runs out.
+
+nlohmann_json.h and makefile
+
+Table for pins for Servo
+
+Image
+
+Video
+
+ScreenShot
+
+
+Complete project is located in the "project" folder. Other folders are standalone programs for testing individual features.
+
