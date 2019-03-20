@@ -1,3 +1,6 @@
+#Architecture
+ARCH := $(shell uname -m)
+
 #Compilers
 CC          := g++ -std=c++14
 DGEN        := doxygen
@@ -12,9 +15,18 @@ BUILDDIR    := ./build
 TARGETDIR   := ./lib
 SRCEXT      := cc
 
+# RPi defines
+ifeq ($(ARCH),armv7l)
+        RPI := -D_RPI_
+else
+        RPI := -D_NOTRPI_
+endif
+
 #Flags, Libraries and Includes
-CFLAGS      := -fsanitize=address -ggdb
-LIB         := -lpthread -lasan
+#CFLAGS      := -fsanitize=address -ggdb $(RPI)
+CFLAGS      := -ggdb $(RPI)
+# LIB         := -lpthread -lasan
+LIB         := -lasan
 INC         := -I$(INCDIR)
 INCDEP      := -I$(INCDIR)
 

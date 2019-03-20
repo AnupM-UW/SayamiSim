@@ -16,16 +16,19 @@ BUILDDIR    := ./build
 TARGETDIR   := ./bin
 SRCEXT      := cc
 
-
-# RPi defines
+#Asan library and RPi Def
 ifeq ($(ARCH),armv7l)
-        RPI := -D_RPI_
+        ASAN := -static-libasan
+        RPI  := -D_RPI_
 else
-        RPI := -D_NOTRPI_
+        ASAN := -lasan
+        RPI  := -D_NOTRPI_
 endif
 
 #Flags, Libraries and Includes
-CFLAGS      := -fsanitize=address -ggdb $(_RPI_)
+# CFLAGS      := -fsanitize=address -ggdb $(RPI)
+CFLAGS      := -ggdb $(RPI)
+# LIB         := -lpthread -lelma $(ASAN) -lgtest
 LIB         := -lpthread -lelma -lgtest
 INC         := -I$(INCDIR) -I$(INCDIR)/elma_port
 INCDEP      := -I$(INCDIR)

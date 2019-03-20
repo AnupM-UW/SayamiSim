@@ -47,8 +47,10 @@ void System::update_heading(int controllerInput) {
     // will cause 5 deg rotation
     _heading += (double)relativeInput/(double)512 * 5;
 
-    if (_heading > 360) { 
-        _heading -= 360; 
+    if (_heading >= 360) {
+        _heading -= 360;
+    } else if (_heading < 0) {
+        _heading += 360;
     }
 }
 
@@ -58,8 +60,10 @@ void System::update_aoa(int controllerInput) {
     // in one cycle, i.e. in the period of System (50 ms), a full deflection of the controller in y-axis will cause pitch rotation of 4 deg
     _aoa += (double)relativeInput/(double)512 * 4;
 
-    if (_aoa > 180) { 
-        _aoa -= 360; 
+    if (_aoa >= 180) {
+        _aoa -= 360;
+    } else if (_aoa < -180) {
+        _aoa += 360;
     }
 }
 

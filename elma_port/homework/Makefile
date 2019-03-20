@@ -1,3 +1,6 @@
+Architecture
+ARCH := $(shell uname -m)
+
 #Compilers
 CC          := g++ -std=c++14
 DGEN        := doxygen
@@ -12,10 +15,20 @@ BUILDDIR    := ./build
 TARGETDIR   := ./bin
 SRCEXT      := cc
 
+#Asan library and RPi Def
+ifeq ($(ARCH),armv7l)
+        ASAN := -static-libasan
+        RPI  := -D_RPI_
+else
+        ASAN := -lasan
+        RPI  := -D_NOTRPI_
+endif
+
 #Flags, Libraries and Includes
-CFLAGS      := -fsanitize=address -ggdb
+CFLAGS      := -fsanitize=address -ggdb $(RPI)
 LIBDIR		:= -L../lib
-LIB         := -lpthread -static-libasan -lelma
+# LIB         := -lpthread -static-libasan -lelma
+LIB         := -lpthread -lelma
 INC         := -I..
 
 #Files
