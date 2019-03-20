@@ -1,4 +1,4 @@
-
+# RPi defines ifeq ($(ARCH),armv7l)         RPI := -D_RPI_ else         RPI := -D_NOTRPI_ endif
 #Architecture
 ARCH := $(shell uname -m)
 
@@ -25,7 +25,7 @@ else
 endif
 
 #Flags, Libraries and Includes
-CFLAGS      := -fsanitize=address -ggdb $(_RPI_)
+CFLAGS      := -fsanitize=address -ggdb $(RPI)
 LIB         := -lpthread -lelma -lgtest
 INC         := -I$(INCDIR) -I$(INCDIR)/elma_port
 INCDEP      := -I$(INCDIR)
