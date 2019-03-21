@@ -78,10 +78,6 @@ $(TARGETDIR)/$(TARGET): $(OBJECTS)
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT) $(HEADERS) $(ELMALIB)
 	$(CC) $(CFLAGS) $(INC) -c -o $@ $< $(CAIRO_BLD)
 
-#CopyPngFiles
-.PHONY: $(PNGFILES)
-	cp $(PNGFILES) $(TARGETDIR)/
-
 #	$(TARGETDIR)/%: %.cc $(ELMALIB)
 #	$(CC) $(CFLAGS) $(INCLUDE) $< $(LIBDIR) $(LIB) -o $@
 
