@@ -13,6 +13,7 @@
 #include "system.h"
 #include "controller.h"
 #include "display.h"
+#include "UDPCommunications.h"
 
 using namespace elma;
 using namespace std::chrono;
@@ -30,6 +31,7 @@ class SayamiSim {
         Servo _servo;
         System _system;
         Controller _controller;
+        UDPCommunications _udpComms;
         Display _display;
         Channel _controllerChannel;
         Channel _attitudeChannel;

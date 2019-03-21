@@ -60,7 +60,7 @@ void wndproc() {
     gtk_window_set_title(GTK_WINDOW(_window), "SayamiSim Window");
     gtk_widget_show_all(_window);
 
-    g_timeout_add(100, (GSourceFunc)time_handler, (gpointer) _window); // 20 fps target, let's start with 10fps
+    g_timeout_add(50, (GSourceFunc)time_handler, (gpointer) _window); // 20 fps target
 
     gtk_main();
 

@@ -7,6 +7,12 @@
 #include <thread>
 #include "../elma_port/elma.h"
 
+typedef std::chrono::duration<double,std::ratio<1,1>> seconds_type;
+typedef std::chrono::duration<double,std::ratio<60,1>> minutes_type;
+typedef std::chrono::duration<double,std::milli> milliseconds_type;
+typedef std::chrono::duration<double,std::ratio<1,1000000>> dblmicroseconds_type;
+typedef std::chrono::duration<double,std::ratio<1,1000000000>> dblnanoseconds_type;
+
 using namespace elma;
 using namespace std::chrono;
 using namespace std;
@@ -16,13 +22,13 @@ using namespace std;
             System();
 
             System(string name);
-            
+
             void init();
-            
+
             void start();
-            
+
             void update();
-            
+
             void stop();
 
 

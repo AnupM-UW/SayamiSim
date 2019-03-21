@@ -10,6 +10,8 @@
 #include <iostream>
 #include <stdlib.h>
 #include <thread>
+#include <vector>
+#include <mutex>
 #include "../elma_port/elma.h"
 
 using namespace elma;
@@ -25,18 +27,18 @@ using namespace std;
             UDPCommunications(string name, string destAddr, int port);
 
             void init();
-            
+
             void start();
-            
+
             void update();
-            
+
             void stop();
 
 
         private:
-            
+
             const int DEFAULT_PORT = 54320;
-            const string DEFAULT_DEST = "192.168.1.20";
+            // string DEFAULT_DEST = "192.168.1.20";
 
             struct sockaddr_in _dest_sockaddr;
             int _socketfd; // socket file descriptor

@@ -72,7 +72,7 @@ int SPIDevice::transfer(unsigned char send[], unsigned char receive[], int lengt
 	struct spi_ioc_transfer	transfer;
 	transfer.tx_buf = (unsigned long) send;
 	transfer.rx_buf = (unsigned long) receive;
-        cout<<"AS: "<<transfer.tx_buf<<","<<transfer.rx_buf<<endl;
+        //// cout<<"AS: "<<transfer.tx_buf<<","<<transfer.rx_buf<<endl;
 	transfer.len = length;
 	transfer.speed_hz = this->speed;
 	transfer.bits_per_word = this->bits;
