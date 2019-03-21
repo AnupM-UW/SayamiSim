@@ -28,6 +28,8 @@ using namespace std;
 
         private:
 
+            const int UPDATE_INTERVAL = 200; // milliseconds
+
             void update_heading(int);
             void update_aoa(int);
 
@@ -37,6 +39,8 @@ using namespace std;
             double _heading;            // heading in degrees
             Channel* _controllerChannel;
             Channel* _attitudeChannel;
+
+            high_resolution_clock::time_point _prevReportTime;
 
     };
 

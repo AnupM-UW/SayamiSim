@@ -7,8 +7,15 @@ using namespace std;
 System::System() : System("unnamed system") {}
 
 System::System(string name) : Process(name),
-    _lat(0), _long(0), _altitude(10000), _heading(0.0), _controllerChannel(NULL), _attitudeChannel(NULL), _aoa(0.0) {
-    
+    _lat(0), 
+    _long(0), 
+    _altitude(10000), 
+    _heading(0.0), 
+    _controllerChannel(NULL), 
+    _attitudeChannel(NULL), 
+    _aoa(0.0) {
+
+    _prevReportTime = high_resolution_clock::now();
 }
 
 void System::init() {
@@ -36,7 +43,19 @@ void System::update() {
     attitude["hdg"] = _heading;
     attitude["aoa"] = _aoa;
 
+    // we will not yet send speed, radio altitude, etc.
+
     _attitudeChannel->send(attitude);
+
+    // now send updates
+    high_resolution_clock::time_point now = high_resolution_clock::now();
+    high_resolution_clock::duration dur = now - _prevReportTime;
+
+    if (milliseconds_type(dur).count() > UPDATE_INTERVAL) {
+        _prevReportTime = now;
+        emit(Event("send_data", attitude));
+    }
+
 }
 
 void System::update_heading(int controllerInput) {

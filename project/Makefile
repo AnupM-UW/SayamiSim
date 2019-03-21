@@ -40,6 +40,7 @@ DGENCONFIG  := docs.config
 HEADERS     := $(wildcard *.h)
 SOURCES     := $(wildcard *.cc)
 OBJECTS     := $(patsubst %.cc, $(BUILDDIR)/%.o, $(notdir $(SOURCES)))
+PNGFILES    := $(wildcard *.png)
 
 #Defauilt Make
 all: directories $(TARGETDIR)/$(TARGET)
@@ -75,6 +76,10 @@ $(TARGETDIR)/$(TARGET): $(OBJECTS)
 #Compile
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT) $(HEADERS) $(ELMALIB)
 	$(CC) $(CFLAGS) $(INC) -c -o $@ $< $(CAIRO_BLD)
+
+#CopyPngFiles
+.PHONY: $(PNGFILES)
+	cp $(PNGFILES) $(TARGETDIR)/
 
 #	$(TARGETDIR)/%: %.cc $(ELMALIB)
 #	$(CC) $(CFLAGS) $(INCLUDE) $< $(LIBDIR) $(LIB) -o $@

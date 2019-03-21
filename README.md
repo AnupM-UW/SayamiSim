@@ -34,8 +34,47 @@ The success criteria for the project are as follows:
 - Sensor/Actuator input from Raspberry Pi drives simulation
 - Sensor data is output in meaningful form.
 
-Installation
+Technologies Used (and Limitations):
 ---
+- UI on Raspberry Pi was written using Gtk 3.0 and Cairo graphics.
+- Windows Client app that uses UDP communication was written in WPF.
+
+Project Structure:
+---
+The /project folder contains the full implementation of the Raspberry Pi portion of the Simulator
+The Windows client that listens to UDP datagrams and communicates with the simulator is in the WindowsClient folder
+
+Installation/Compilation Notes:
+---
+Note that the project can only be compiled in situ in Raspberry Pi (perhaps on a RPi Docker container as well) due to dependency on Gtk and Cairo, among other things. It would be meaningless to compile elsewhere since there are hardware dependencies for the Joystick and Servo, and the pin number assignments for the hardware may not be portable. I cannot make a dependency-less Docker container for this project.
+
+Also note that on my computer, I already had another json library (json.h) in my /usr/local/include/json folder. Therefore I copied the nlohmann json library (which is a single header file) as nlohmann_json.h instead of json.h and changed my elma headers and project headers to include <json/nlohmann_json.h> instead of <json/json.h>. In the Makefile, I defined the $(RPI) variable as a C-define flag to g++ as below. Then in my header files I ifdef'ed the correct json header in case of Raspberry Pi.
+```
+#Architecture
+ARCH := $(shell uname -m)
+...
+ifeq ($(ARCH),armv7l)
+        RPI  := -D_RPI_
+else
+        RPI  := -D_NOTRPI_
+endif
+
+#Flags, Libraries and Includes
+CFLAGS      := -ggdb $(RPI)
+```
+
+and in the header files:
+
+```
+#ifdef _RPI_
+#include <json/nlohmann_json.h>
+#else
+#include <json/json.h>
+#endif
+```
+
+Library Dependencies:
+
 - Elma: The project requires the [Elma framework](https://github.com/klavinslab/elma/blob/master/README.md), which is an event and process managment framework for embedded devices. Installation instructions for Elma framework can be found [here](https://github.com/klavinslab/elma/blob/master/README.md).
 
 - WiringPi: The project also requires the WiringPi library for interacting with sensors and actuators in Raspberry Pi. The project targets Raspberry Pi 3 devices with the 40 pin connector.
@@ -50,7 +89,7 @@ sudo apt-get install libgtk-3-dev
 
 - - Gtk3.0 can be installed concurrently with Gtk2.0 (which was the case for me). You also need the Cairo graphics library, which is installed with Gtk (among other dependencies). Cairo graphics library is used by many OS components so it may also already be installed.
 
-- Jsonlib: The project also requires jsonlib from nlohmann. Note that other json classes could be installed on your /usr/local/include or /usr/lib path (which was the case for me). Jsonlib is a single header file that you include in your project (a la #include <json/json.h>); however due to name conflict, I had to rename it to <json/nlohmann_json.h>.
+- JSON for Modern C++ library: The project also requires this json library from nlohmann (reference at https://github.com/nlohmann/json). Note that other json classes could be installed on your /usr/local/include or /usr/lib path (which was the case for me). This json library is a single header file that you include in your project (a la #include <json/json.h>); however due to name conflict, I had to rename it to <json/nlohmann_json.h>. See note above for more details.
 
 ```
 #include <json/nlohmann_json.h>
