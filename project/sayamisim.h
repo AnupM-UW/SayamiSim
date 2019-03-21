@@ -8,6 +8,7 @@
 #include <vector>
 #include <algorithm>
 #include "../elma_port/elma.h"
+#include <wiringPi.h>
 
 #include "servo.h"
 #include "system.h"

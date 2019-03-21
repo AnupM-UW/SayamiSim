@@ -29,7 +29,7 @@ endif
 
 #Flags, Libraries and Includes
 CFLAGS      := -ggdb $(RPI)
-LIB         := -lpthread -lelma -lgtest
+LIB         := -lpthread -lelma -lgtest -lwiringPi
 INC         := -I$(INCDIR) -I$(INCDIR)/elma_port
 INCDEP      := -I$(INCDIR)
 LIBDIR		:= -L../elma_port/lib
@@ -52,6 +52,7 @@ remake: cleaner all
 directories:
 	@mkdir -p $(TARGETDIR)
 	@mkdir -p $(BUILDDIR)
+	cp $(PNGFILES) $(TARGETDIR)
 
 # Make the documentation
 $(DGENCONFIG):

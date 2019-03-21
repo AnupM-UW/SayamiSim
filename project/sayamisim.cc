@@ -11,12 +11,19 @@ SayamiSim::SayamiSim() :
                 _udpComms("udpcomms"),
                 _controllerChannel("controller"),
                 _attitudeChannel("attitude") {
+
     ::currentDisplay = &_display;
+
+    // initialize WiringPi using GPIO pin numbers
+    wiringPiSetupGpio();
+
+    cout<<"Wiring Pi Setup"<<endl;
+
     _mgr
     .schedule(_controller, 100_ms)
     .schedule(_system, 50_ms)
     .schedule(_display, 50_ms)
-    .schedule(_servo, 100_ms)
+    .schedule(_servo, 500_ms)
     .schedule(_udpComms, 100_ms)
     .add_channel(_controllerChannel)
     .add_channel(_attitudeChannel)
