@@ -6,10 +6,12 @@
 
 #include <thread>
 #include "../elma_port/elma.h"
+#include "circularbuffer.h"
 
 using namespace elma;
 using namespace std::chrono;
 using namespace std;
+using json = nlohmann::json;
 
     class DataRecorder : public Process {
         public:
@@ -29,6 +31,7 @@ using namespace std;
         private:
 
             high_resolution_clock::time_point _prevSaveTime;
+            CircularBuffer<string> _buffer;
 
     };
 

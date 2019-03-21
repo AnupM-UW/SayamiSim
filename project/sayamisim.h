@@ -15,6 +15,7 @@
 #include "controller.h"
 #include "display.h"
 #include "UDPCommunications.h"
+#include "DataRecorder.h"
 
 using namespace elma;
 using namespace std::chrono;
@@ -34,6 +35,7 @@ class SayamiSim {
         Controller _controller;
         UDPCommunications _udpComms;
         Display _display;
+        DataRecorder _dataRecorder;
         Channel _controllerChannel;
         Channel _attitudeChannel;
 

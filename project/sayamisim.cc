@@ -9,6 +9,7 @@ SayamiSim::SayamiSim() :
                 _display("display"),
                 _system("system"),
                 _udpComms("udpcomms"),
+                _dataRecorder("datarecorder"),
                 _controllerChannel("controller"),
                 _attitudeChannel("attitude") {
 
@@ -25,6 +26,7 @@ SayamiSim::SayamiSim() :
     .schedule(_display, 50_ms)
     .schedule(_servo, 500_ms)
     .schedule(_udpComms, 100_ms)
+    .schedule(_dataRecorder, 200_ms)
     .add_channel(_controllerChannel)
     .add_channel(_attitudeChannel)
     .init();
