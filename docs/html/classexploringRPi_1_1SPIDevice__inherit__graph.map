@@ -1,0 +1,3 @@
+<map id="exploringRPi::SPIDevice" name="exploringRPi::SPIDevice">
+<area shape="rect" id="node2" href="$classexploringRPi_1_1BusDevice.html" title="This class is the parent of I2C and SPI devices, so that devices that use both SPI and I2C interfaces..." alt="" coords="5,5,180,32"/>
+</map>

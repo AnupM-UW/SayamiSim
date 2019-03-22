@@ -1,0 +1,4 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classexploringRPi_1_1BusDevice.html" title="This class is the parent of I2C and SPI devices, so that devices that use both SPI and I2C interfaces..." alt="" coords="5,5,180,32"/>
+<area shape="rect" id="node2" href="$classexploringRPi_1_1SPIDevice.html" title="Generic SPI Device class that can be used to connect to any type of SPI device and read or write to i..." alt="" coords="228,5,399,32"/>
+</map>
