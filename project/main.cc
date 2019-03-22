@@ -26,8 +26,11 @@ static Channel nullChannel("nullchannel");
 
 // };
 
-int runtests() {
+int runtests(const char *clientIp ) {
     SayamiSim sim;
+    if (clientIp != NULL) {
+        SayamiSim::clientIp = string(clientIp);
+    }
     sim.run();
     return 0;
 }
@@ -36,7 +39,14 @@ int main(int argc, char **argv)
 {
     // ::testing::InitGoogleTest(&argc, argv);
     srand(time(NULL));
-    runtests();
+    if (argc >= 2) {
+        cout<<"Using:"<<argv[1]<<endl;
+        runtests(argv[1]);
+    } else {
+        cout<<"Using: default ip client"<<endl;
+        runtests(NULL);
+    }
+
     // remove the default listener
     // run
     // return RUN_ALL_TESTS();

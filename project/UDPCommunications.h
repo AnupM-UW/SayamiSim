@@ -14,6 +14,9 @@
 #include <mutex>
 #include "../elma_port/elma.h"
 
+#define DEFAULT_PORT 54320
+
+
 using namespace elma;
 using namespace std::chrono;
 using namespace std;
@@ -37,7 +40,6 @@ using namespace std;
 
         private:
 
-            const int DEFAULT_PORT = 54320;
             // string DEFAULT_DEST = "192.168.1.20";
 
             struct sockaddr_in _dest_sockaddr;
@@ -45,7 +47,8 @@ using namespace std;
             int _port;
             string _destaddr;
             vector<json> _event_list;
-            std::mutex _mtx;
+
+            // std::mutex _mtx;
     };
 
 #endif
