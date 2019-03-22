@@ -139,11 +139,11 @@ Pin Assignment for Joystick
 |          |               |
 
 Pin Assignment for Servo (SG90)
-| Servo  | RPi Pin                     |
-|--------|-----------------------------|
-|        |         PWM0, Pin12         |
-|        |             Gnd             |
-|        |   3.3V Vcc via 1K resistor  |
+| Servo   | RPi Pin                     |
+|---------|-----------------------------|
+|    A    |         PWM0, Pin12         |
+|    B    |             Gnd             |
+|    C    |   3.3V Vcc via 1K resistor  |
 
 Running the Simulator
 ---
