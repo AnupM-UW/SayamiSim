@@ -38,7 +38,15 @@ Technologies Used (and Limitations):
 ---
 - UI on Raspberry Pi written using Gtk 3.0 and Cairo graphics.
 - - Cairo graphics was one of the hardest parts to program. I originally planned to do a perspective scaling to give the effect of 3D. Note that real 3D on the Raspberry Pi is difficult, although there are several projects that have limited capability (or some require a special driver). It seemed like getting 3D working in the timeframe for the project was a no-go. So I decided to write a simple perspective projection just using linear scaling. This works OK in Windows, but on Raspberry Pi and Cairo graphics there were several issues. a) Quite frequently, the graphics would randomly Segmentation Fault. Although easy to repro, it seemed like too much work to debug it without full debugging tools. b) I had to create 3 separate Cairo graphics surfaces for each drawing frame (20+ times per second), and an extra Cairo context as well. Even after disposing of these resoures, the working set quickly grew to over 372MB for the program even at the low frame (10fps) rates I was using initially. It seemed to me that while Cairo graphics was good for most types of UI, it was not suitable for this kind of graphics demand. On Windows, the same program can be made much easier than using Cairo.
-- Windows Client app that uses UDP communication was written in WPF. WPF has good and easy interfaces for image manipulation. UDP communication is relatively easy due to prebuilt UDP client classes.
+- Windows Client app that uses UDP communication was written in WPF. WPF has good and easy interfaces for image manipulation. UDP communication is relatively easy due to prebuilt UDP client classes. However, the Windows Client lags terribly because of the speed at which the RPi is sending data, and the async/await programming model of Windows app was not able to keep up. The UDP packets come in much faster than the windows app can keep up. It will be a good idea to redo the Windows app to skip messages if they come in too fast, but this is a big change to the Windows app, requiring lower level access than the APIs I am using or even spawning a set of helper threads (might be a bad idea if thread count exceeds even 10 threads). This was a stretch goal for me to get this app working, so I am not bothering to fix this before the project deadline.
+- The Data Recorder is similar to a Flight Data Recorder (FDR) and it will log the latest items to file every 15 seconds.
+
+Videos of Simulator in Operation:
+---
+
+[![SayamiSim](http://img.youtube.com/vi/UbQ24S_FvWg/0.jpg)](https://www.youtube.com/watch?v=UbQ24S_FvWg "SayamiSim")
+
+[![SayamiSim Windows](http://img.youtube.com/vi/p7mdbKRNUt8/0.jpg)](https://www.youtube.com/watch?v=p7mdbKRNUt8 "SayamiSim Windows")
 
 Simulator Screenshot:
 ---
@@ -161,7 +169,7 @@ Pin Assignment for Servo (SG90)
 | Red Wire         |  5V Vcc via 1K resistor  |
 ```
 
-![Pin connections to RPi on breadboard](RPiConnections.jpg)
+![Pin connections to RPi on breadboard](RPiPinConnections.JPG)
 
 Running the Simulator
 ---
@@ -169,6 +177,11 @@ Make sure to run as sudo. ⚠️️ I have found that not running as sudo RELIAB
 ```
 sudo ./simulator
 ```
+or 
+```
+sudo ./simulator <ip of client>
+```
+⚠️️ Note: that the simulator Data Recorder produces log files in the folder that it was started from, e.g. "Thu 2019 Mar 21 04_03_22 PST 1.log". One log file will be produced every 15 seconds! You can clean up those files when done.
 
 Network Communication Using UDP:
 ---
@@ -178,7 +191,7 @@ UDP can send data Peer-to-Peer (P2P), with multicast groups, or over broadcast a
 
 The simulator will send UDP datagrams over the network with the state of the simulator, e.g. Altitude, latitude, etc. Other clients can read those messages and do meaningful things with them.
 
-I hardcoded my IP address (192.168.1.20) since this address rarely changes (although it is subject to the DHCP IP address lease timeout), but this is easy to change and I want to make this process more dynamic in the future.
+The simulator can take up to one command line param which is the IP address of the P2P UDP client. Otherwise, it will use the hardcoded IP address (192.168.1.20) of my computer. Since this address rarely changes (although it is subject to the DHCP IP address lease timeout), it works out. This is easy to change to make this process more dynamic in the future, but the ability to specify target IP in command line is already great.
 
 Milestones
 ---
