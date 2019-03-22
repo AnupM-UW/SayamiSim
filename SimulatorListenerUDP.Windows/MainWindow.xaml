@@ -1,0 +1,25 @@
+﻿<Window x:Class="SimulatorListenerUDP.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SimulatorListenerUDP"
+        mc:Ignorable="d"
+        Title="Simulator Data UDP Client" Height="450" Width="800">
+    <Grid>
+        <ListBox x:Name="lbGetInfo" HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="565"/>
+        <Grid HorizontalAlignment="Left" Height="200" Margin="580,10,0,0" VerticalAlignment="Top" Width="200" Background="Black">
+            <Image Source="HeadingInd.jpg" Width="200" Height="200"  HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="imgCompass">
+                <Image.LayoutTransform>
+                    <RotateTransform CenterX="0.5" CenterY="0.5" Angle="0" />
+                </Image.LayoutTransform>
+            </Image>
+            <TextBlock Text="^" HorizontalAlignment="Center" FontWeight="ExtraBold" VerticalAlignment="Top" Foreground="Yellow" FontSize="12" Margin="0,50,0,0"/>
+            <TextBlock Text="|" HorizontalAlignment="Center" FontWeight="ExtraBold" VerticalAlignment="Top" Foreground="Yellow" Margin="0,50,0,0"/>
+            <TextBlock Text="|" HorizontalAlignment="Center" FontWeight="ExtraBold" VerticalAlignment="Top" FontSize="35" Foreground="Yellow" Margin="0,70,0,0"/>
+            <TextBlock Text="&#x2014;" HorizontalAlignment="Center" FontWeight="ExtraBold" FontSize="35" VerticalAlignment="Top" Foreground="Yellow" Margin="0,63,0,0"/>
+            <TextBlock Text="&#x2014;" HorizontalAlignment="Center" FontWeight="ExtraBold" FontSize="20" VerticalAlignment="Top" Foreground="Yellow" Margin="0,95,0,0"/>
+        </Grid>
+
+    </Grid>
+</Window>
