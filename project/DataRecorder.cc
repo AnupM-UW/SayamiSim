@@ -19,7 +19,7 @@ void DataRecorder::init() {
     // watch("send_data", [this](Event& e) {
     //     json j = e.value();
 
-    //     j["timestamp"] = 
+    //     j["timestamp"] =
     //     // _event_list.push_back(e.value());
     // });
 
@@ -30,9 +30,9 @@ void DataRecorder::start() {
 }
 
 void DataRecorder::update() {
-    if (!_attitudeChannel.nonempty()) { return; }
+    if (!_attitudeChannel->nonempty()) { return; }
     json j;
-    json jatt = _attitudeChannel.latest();
+    json jatt = _attitudeChannel->latest();
 
     j["timestamp"] = jatt["timestamp"];
     j["lat"] = jatt["lat"];
@@ -41,10 +41,10 @@ void DataRecorder::update() {
     j["hdg"] = jatt["hdg"];
     j["aoa"] = jatt["aoa"];
 
-    if (_controllerChannel.nonempty()) {
-        json jctr = _controllerChannel.latest();
-        j["controllerPosX"] = to_string(jctr["controllerPosX"]);
-        j["controllerPosY"] = to_string(jctr["controllerPosY"]);
+    if (_controllerChannel->nonempty()) {
+        json jctr = _controllerChannel->latest();
+        j["controllerPosX"] = jctr["controllerPosX"];
+        j["controllerPosY"] = jctr["controllerPosY"];
     } else {
         j["controllerPosX"] = "unknown";
         j["controllerPosY"] = "unknown";
@@ -77,7 +77,7 @@ void DataRecorder::save_data() {
     _fileNum = (_fileNum + 1) % 1000;
     string filename = v + to_string(_fileNum);
     needle = ":";
-    std::size_t found = filename.find(needle);
+    found = filename.find(needle);
     while (found != string::npos) {
         filename.replace(found, needle.length(), "_");
         cout<<"* Saving Filename:" << filename<<endl;
