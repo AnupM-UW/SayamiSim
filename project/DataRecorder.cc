@@ -51,7 +51,7 @@ void DataRecorder::update() {
     }
 
     _buffer.insert(j);
-    
+
     high_resolution_clock::time_point now = high_resolution_clock::now();
     high_resolution_clock::duration dur = now - _prevSaveTime;
 
@@ -67,10 +67,16 @@ void DataRecorder::stop() {
 void DataRecorder::save_data() {
     std::time_t t = std::time(nullptr);
     std::tm tm = *std::localtime(&t);
-    const char* v = std::put_time(&tm, "%c %Z ");
+    string v = string(std::asctime(&tm));
+    string needle = "\n";
+    std::size_t found = v.find(needle);
+    while (found != string::npos) {
+        v.replace(found, needle.length(), " ");
+        found = v.find(needle);
+    }
     _fileNum = (_fileNum + 1) % 1000;
-    string filename = string(v) + to_string(_fileNum);
-    string needle = ":";
+    string filename = v + to_string(_fileNum);
+    needle = ":";
     std::size_t found = filename.find(needle);
     while (found != string::npos) {
         filename.replace(found, needle.length(), "_");
