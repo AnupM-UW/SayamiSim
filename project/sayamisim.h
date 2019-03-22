@@ -31,6 +31,8 @@ class SayamiSim {
         void run();
         void run(high_resolution_clock::duration duration);
 
+        static string clientIp; // for UDP client if there is one
+
     private:
         Manager _mgr;
         Servo _servo;

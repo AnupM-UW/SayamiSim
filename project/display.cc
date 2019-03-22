@@ -299,12 +299,12 @@ void Display::do_display(const json& att) {
     double alt = att["alt"];
     double hdg = att["hdg"];
     double aoa = att["aoa"];
-    cout<<"Display update .. "
-        <<"Latitude: "  <<lat<< " "
-        <<"Longitude: " <<lng<< " "
-        <<"Altitude: "  <<alt<< " "
-        <<"Heading: "   <<hdg<< " "
-        <<"AoA: "       <<aoa<< endl;
+    //cout<<"Display update .. "
+    //    <<"Latitude: "  <<lat<< " "
+    //    <<"Longitude: " <<lng<< " "
+    //    <<"Altitude: "  <<alt<< " "
+    //    <<"Heading: "   <<hdg<< " "
+    //    <<"AoA: "       <<aoa<< endl;
 }
 
 void Display::stop() {

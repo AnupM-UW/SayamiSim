@@ -15,13 +15,13 @@ UDPCommunications::UDPCommunications(string name, string destAddr, int port) :
                                                 _destaddr(destAddr),
                                                 _socketfd(0),
                                                 _port(port),
-                                                _mtx(),
+                                                // _mtx(),
                                                 _event_list() {
 
 }
 
 void UDPCommunications::init() {
-    cout<<"UDP init"<<endl;
+    cout<<"UDP init with dest address: "<<_destaddr<<endl;
     // create a UDP socket
     // not sure why you don't set up the 3rd param of socket as IPPROTO_UDP instead of 0
     _socketfd = socket(AF_INET, SOCK_DGRAM, 0); // note that AF_INET specifies IPv4 address

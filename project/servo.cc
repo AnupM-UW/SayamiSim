@@ -53,7 +53,7 @@ int Servo::normalize_servo_pos(int controllerPos) {
     double div = (double) controllerPos / (double) 1024 * (RIGHT - LEFT); // how far into thr range
     div += (double) LEFT;
     retval = (int)round(div);
-    cout<<"Servo Pos:"<<retval<<endl;
+    /// cout<<"Servo Pos:"<<retval<<endl;
     return retval;
 }
 

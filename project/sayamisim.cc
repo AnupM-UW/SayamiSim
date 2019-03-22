@@ -2,6 +2,8 @@
 
 Display* currentDisplay;
 
+string SayamiSim::clientIp = "none";
+
 SayamiSim::SayamiSim() :
                 _mgr(),
                 _controller("controller"),
@@ -20,6 +22,18 @@ SayamiSim::SayamiSim() :
 
     cout<<"Wiring Pi Setup"<<endl;
 
+}
+
+void SayamiSim::run() {
+    run(295_s);
+}
+
+void SayamiSim::run(high_resolution_clock::duration duration) {
+    cout<<"IP:"<<SayamiSim::clientIp<<endl;
+    if (SayamiSim::clientIp != "none") {
+        _udpComms = UDPCommunications(string("udpcomms"), SayamiSim::clientIp, DEFAULT_PORT);
+    }
+
     _mgr
     .schedule(_controller, 100_ms)
     .schedule(_system, 50_ms)
@@ -30,12 +44,5 @@ SayamiSim::SayamiSim() :
     .add_channel(_controllerChannel)
     .add_channel(_attitudeChannel)
     .init();
-}
-
-void SayamiSim::run() {
-    _mgr.run(95_s);
-}
-
-void SayamiSim::run(high_resolution_clock::duration duration) {
     _mgr.run(duration);
 }
