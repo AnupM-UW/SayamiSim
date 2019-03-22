@@ -2,6 +2,7 @@
  * circularbuffer.h
  *
  *  Created on: Mar 3, 2018
+ *      Converted to C++ templated class March 21, 2019
  *      Author: anupm
  *
  *      Circular buffer implementation with overwrite of least frequently used data
@@ -87,9 +88,12 @@ class CircularBuffer
     bool printdatalogtofile(const char *filename,
                    string_converter_t printHandler) const;
 
-    //void printall(std::function<string(T&)> printHandler) const;
-
-    //bool printdatalogtofile(const char *filename,
+    // these are commented out, since std::function with string(T&) lambda instead tried to invoke string ctor with templated reference
+    // Instead I had to use C-style function pointers (string_converter_t) and pass in const void* params
+    //
+    // void printall(std::function<string(T&)> printHandler) const;
+    //
+    // bool printdatalogtofile(const char *filename,
     //               std::function<strign(T&)> printHandler) const;
 
   private:

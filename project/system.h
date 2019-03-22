@@ -1,3 +1,13 @@
+/*
+ * system.h
+ *
+ *      Created class March 21, 2019
+ *      Author: anupm
+ *
+ *      Flight dynamics class derived from Elma Process class
+ *
+ */
+
 #ifndef _SYSTEM_H_
 #define _SYSTEM_H_
 
@@ -20,14 +30,14 @@ using namespace std;
     //! A Flight Simulator Process that models flight dynamics and manages the state of the system
     class System : public Process {
         public:
-            //! Constructor
+            //! Constructor System ctor
             System();
 
-            //! Constructor
+            //! Constructor ctor with name parameter
             //! \param name The name of the Process
             System(string name);
 
-            //! Initialization method. 
+            //! Initialization method. Initialize the Simulator state/dynamics
             //! It will usually be called once, after all processes and
             //! communication objects have been added to the manager, but before
             //! the Manager starts running.
@@ -39,20 +49,21 @@ using namespace std;
             //! Session type initialization should happen here.
             void start();
 
-            //! Update method. 
+            //! Update method. Update the simulator state/dynamics
             //! Called repeatedly by the manager at a frequency
             //! determined by the period used when the process is scheduled with the
             //! Manager (see Manager::schedule).
             void update();
 
-            //! Stop method. All session cleanup happens here
-            //! It may be called multiple times, if the manager is started and stopped.        
+            //! Stop method. System session cleanup
+            //! It may be called multiple times if the manager starts and stops the process.
             void stop();
 
 
         private:
 
-            const int UPDATE_INTERVAL = 200; // milliseconds
+            const int UPDATE_INTERVAL = 200; // milliseconds interval for update to UDP client
+                                             // this is not the update interval for the system itself - misnamed
 
             void update_heading(int);
             void update_aoa(int);

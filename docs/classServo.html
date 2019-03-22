@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -94,15 +94,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Inheritance diagram for Servo:</div>
 <div class="dyncontent">
 <div class="center"><img src="classServo__inherit__graph.png" border="0" usemap="#Servo_inherit__map" alt="Inheritance graph"/></div>
-<map name="Servo_inherit__map" id="Servo_inherit__map">
-</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for Servo:</div>
 <div class="dyncontent">
 <div class="center"><img src="classServo__coll__graph.png" border="0" usemap="#Servo_coll__map" alt="Collaboration graph"/></div>
-<map name="Servo_coll__map" id="Servo_coll__map">
-</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -118,12 +114,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a69ee8dc47d36d5b6cf4bb99f11cf9c52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef590ce5ad82d3373abecd04c521d163"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServo.html#aef590ce5ad82d3373abecd04c521d163">stop</a> ()</td></tr>
 <tr class="separator:aef590ce5ad82d3373abecd04c521d163"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a3920075230a6558644182127b436a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a3920075230a6558644182127b436a0"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>normalize_servo_pos</b> (int controllerPos)</td></tr>
+<tr class="memitem:a9a3920075230a6558644182127b436a0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServo.html#a9a3920075230a6558644182127b436a0">normalize_servo_pos</a> (int controllerPos)</td></tr>
 <tr class="separator:a9a3920075230a6558644182127b436a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A <a class="el" href="classServo.html">Servo</a> class Derived from the Process class and gets scheduled by the Manager class Listens to the <a class="el" href="classController.html">Controller</a> channel to gather data about the joystick and moves the servo position to mimic the position of the joystick controller </p>
+<div class="textblock"><p>A <a class="el" href="classServo.html">Servo</a> class that uses PWM output to set servo postion based on joystick or controlelr input. It is derived from the Process class and gets scheduled by the Manager class. Listens to the <a class="el" href="classController.html">Controller</a> channel to gather data about the joystick and moves the servo position to mimic the position of the joystick controller </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a08d7834b27790aee5c1694398a9c1ce5"></a>
 <div class="memitem">
@@ -137,7 +132,24 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>normalize_servo_pos</b
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initialization method. It will usually be called once, after all processes and communication objects have been added to the manager, but before the Manager starts running. </p>
+<p>Initialization will setup the PWM mode, calculations for duty cycle for PWM It will usually be called once, after all processes and communication objects have been added to the manager, but before the Manager starts running. </p>
+
+</div>
+</div>
+<a class="anchor" id="a9a3920075230a6558644182127b436a0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Servo::normalize_servo_pos </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>controllerPos</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>cout&lt;&lt;"Servo Pos:"&lt;&lt;retval&lt;&lt;endl; </p>
 
 </div>
 </div>
@@ -153,7 +165,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>normalize_servo_pos</b
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Start method. Called just before the manager starts running. It may be called multiple times, if the manager is started and stopped. Session type initialization should happen here. </p>
+<p>Start method. Will set deflection to center at start Called just before the manager starts running. It may be called multiple times, if the manager is started and stopped. Session type initialization should happen here. </p>
 
 </div>
 </div>
@@ -169,7 +181,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>normalize_servo_pos</b
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Stop method. All session cleanup happens here It may be called multiple times, if the manager is started and stopped. stops the servo and moves it back to neutral position </p>
+<p>Stop method. Will set deflection of servo to center It may be called multiple times, if the manager is started and stopped. stops the servo and moves it back to neutral position </p>
 
 </div>
 </div>
@@ -185,7 +197,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>normalize_servo_pos</b
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Update method. Called repeatedly by the manager at a frequency determined by the period used when the process is scheduled with the Manager Updates the servo position to match the joystick </p>
+<p>Update method. Will continually set the servo postion. Called repeatedly by the manager at a frequency determined by the period used when the process is scheduled with the Manager</p>
+<p>Updates the servo position to match the joystick Note that the servo is artifically slowed down because the PWM pulse has a lag of about 100ms if the throw of the servo movement is large </p>
 
 </div>
 </div>
@@ -196,7 +209,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>normalize_servo_pos</b
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 22 2019 20:51:46 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 22 2019 22:45:24 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

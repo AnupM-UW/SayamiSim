@@ -1,3 +1,16 @@
+/*
+ * display.h
+ *
+ *      Created class March 21, 2019
+ *      Author: anupm
+ *
+ *      Display class for Raspberry Pi that displays content into a Gtk window
+ *      using Cairo graphics
+ * 
+ *      derived from Elma Process class
+ *
+ */
+
 #ifndef _DISPLAY_H_
 #define _DISPLAY_H_
 
@@ -33,7 +46,7 @@ void do_perspective_scale(cairo_t* cr);
 
 gboolean time_handler(GtkWidget *widget);
 
-// Display* currentDisplay = NULL;
+
 
 //! A Display class to display flight simulator output to a Window
 //! Derived from the Process class and gets scheduled by the Manager class
@@ -43,16 +56,37 @@ gboolean time_handler(GtkWidget *widget);
 
 class Display : public Process {
     public:
+        //! Constructor for UI
         Display();
 
+        //! Constructor for UI (takes a process name)
+        //! \param name Name of the process
         Display(string name);
 
+        //! Initialization method.
+        //! It will usually be called once, after all processes and
+        //! communication objects have been added to the manager, but before
+        //! the Manager starts running.
         void init();
 
+        //! Start method. Set up the UI for the app
+        //! Will set up a separate thread to 
+        //! update the Gtk windowed UI using a window procedure (wndproc)
+        //! Called just before the manager starts running.
+        //! It may be called multiple times, if the manager is started and stopped.
+        //! Session type initialization should happen here.
         void start();
 
+        //! Update method. Will update the App UI at a set frequency
+        //! Target frame rate is 20fps, but can be pushed higher.
+        //! Determined by the period used when the process is scheduled with the
+        //! Manager (see Manager::schedule).
         void update();
 
+        //! Stop method. Will send a quit message to the UI, which will terminate
+        //! the window procedure thread. Simulator will still continue to run without
+        //! UI
+        //! It may be called multiple times, if the manager is started and stopped.        
         void stop();
 
 	static double rotation();

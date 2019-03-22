@@ -58,17 +58,19 @@ short Controller::combineValues(unsigned char upper, unsigned char lower) {
    return ((short)upper<<8)|(short)lower;
 }
 
-int ct = 0;
+int ct = 0; // used forsteady state
 
 std::tuple<int,int> Controller::get_controller_pos() {
     int valX = 0, valY = 0;
+
 #ifdef TEST_CTRL_POS
+    // the ifdef is for quick standalone testing with random values
     valX = (rand() % 1024 + 1);
     valY = (rand() % 1024 + 1);
 #else
     unsigned char send[3], receive[3];
     // in case of MCP3008 ADC, the first byte is 0x01 which signals start of comms
-    // in case of MCP3208, this is slightly different
+    // in case of MCP3208, this is slightly different. The MCP3208 has a 12 bit return value instead of 10 bits
 
     // for MCP3008, the values are bit7 : 1, bit8 : 1/0 for single/diff mode, bits 9-11 : the channel number or diff (e.g. 000 is channel 0)
     // e.g.
@@ -89,7 +91,9 @@ std::tuple<int,int> Controller::get_controller_pos() {
     send[2] = 0;          // not needed and ignored
 
     if (ct < 10) {
-       valX = 512;
+        // there was some slight issues with the ADC at first. Can probably be weeded out now after further testing. Otherwise, the ct variable
+        // was used to get to steady state
+        valX = 512;
     } else {
 
         _busDevice->transfer(send, receive, 3);
@@ -98,11 +102,16 @@ std::tuple<int,int> Controller::get_controller_pos() {
     }
     ++ct;
 
-    //send[0] = 0b00000001; // The start bit
-    //send[1] = 0b10100000; // MSB is single/diff bit followed by 010 for CH2
-    //send[2] = 0;          // not needed and ignored
-    //_busDevice->transfer(send, receive, 3);
-
+    //
+    // ignoring the Y value for the moment since we will only use the yaw-axis value for this simulator
+    // enable in the future when Simulator dynamics are improved.
+    // For now return 0 deflection value, i.e. 512
+    //
+    // send[0] = 0b00000001; // The start bit
+    // send[1] = 0b10100000; // MSB is single/diff bit followed by 010 for CH2
+    // send[2] = 0;          // not needed and ignored
+    // _busDevice->transfer(send, receive, 3);
+    //
     valY = 512; //(int)combineValues(receive[1] & 0b00000011, receive[2]);
 
 

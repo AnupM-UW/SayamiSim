@@ -1,3 +1,13 @@
+/*
+ * servo.h
+ *
+ *      Created class March 21, 2019
+ *      Author: anupm
+ *
+ *      Servo controller class for Raspberry Pi derived from Elma Process class
+ *
+ */
+
 #ifndef _SERVO_H_
 #define _SERVO_H_
 
@@ -12,10 +22,10 @@ using namespace elma;
 using namespace std::chrono;
 using namespace std;
 
-//! A Servo class
-//! Derived from the Process class and gets scheduled by the Manager class
-//! Listens to the Controller channel to gather data about the joystick
-//! and moves the servo position to mimic the position of the joystick controller
+//! A Servo class that uses PWM output to set servo postion based on joystick
+//! or controlelr input. It is derived from the Process class and gets scheduled by
+//! the Manager class. Listens to the Controller channel to gather data about the
+//! joystick and moves the servo position to mimic the position of the joystick controller
 
 class Servo : public Process {
     public:
@@ -23,26 +33,29 @@ class Servo : public Process {
 
         Servo(string name);
 
-        //! Initialization method. 
+        //! Initialization will setup the PWM mode, calculations for 
+        //! duty cycle for PWM
         //! It will usually be called once, after all processes and
         //! communication objects have been added to the manager, but before
         //! the Manager starts running.
         void init();
 
-        //! Start method. 
+        //! Start method. Will set deflection to center at start
         //! Called just before the manager starts running.
         //! It may be called multiple times, if the manager is started and stopped.
         //! Session type initialization should happen here.
         void start();
 
-        //! Update method. 
-        //! Called repeatedly by the manager at a frequency
-        //! determined by the period used when the process is scheduled with the
-        //! Manager
+        //! Update method. Will continually set the servo postion. Called 
+        //! repeatedly by the manager at a frequency determined by the 
+        //! period used when the process is scheduled with the Manager
+        //! 
         //! Updates the servo position to match the joystick
+        //! Note that the servo is artifically slowed down because the PWM pulse
+        //! has a lag of about 100ms if the throw of the servo movement is large
         void update();
 
-        //! Stop method. All session cleanup happens here
+        //! Stop method. Will set deflection of servo to center
         //! It may be called multiple times, if the manager is started and stopped.
         //! stops the servo and moves it back to neutral position
         void stop();

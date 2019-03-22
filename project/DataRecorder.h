@@ -1,3 +1,13 @@
+/*
+ * DataRecorder.h
+ *
+ *      Created class March 21, 2019
+ *      Author: anupm
+ *
+ *      derived from Elma Process class
+ *
+ */
+
 #ifndef _DATARECORDER_H_
 #define _DATARECORDER_H_
 
@@ -23,16 +33,35 @@ using json = nlohmann::json;
 
     class DataRecorder : public Process {
         public:
+            //! Constructor of data recorder
             DataRecorder();
 
+            //! Constructor ctor with name parameter
+            //! \param name The name of the Process
             DataRecorder(string name);
 
+            //! Initialization method. 
+            //! It will usually be called once, after all processes and
+            //! communication objects have been added to the manager, but before
+            //! the Manager starts running.
             void init();
 
+            //! Start method. 
+            //! Called just before the manager starts running.
+            //! It may be called multiple times, if the manager is started and stopped.
+            //! Session type initialization should happen here.
             void start();
 
+            //! Update method. Updates the data in its internal buffer. At a set 
+            //! schedule the Most Recent data points will be flushed to disk as
+            //! a log file.
+            //! Called repeatedly by the manager at a frequency
+            //! determined by the period used when the process is scheduled with the
+            //! Manager (see Manager::schedule).
             void update();
 
+            //! Stop method. All session cleanup happens here
+            //! It may be called multiple times, if the manager is started and stopped.        
             void stop();
 
 

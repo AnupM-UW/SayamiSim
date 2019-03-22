@@ -69,8 +69,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li class="current"><a href="functions.html"><span>All</span></a></li>
       <li><a href="functions_func.html"><span>Functions</span></a></li>
+      <li><a href="functions_vars.html"><span>Variables</span></a></li>
       <li><a href="functions_enum.html"><span>Enumerations</span></a></li>
       <li><a href="functions_eval.html"><span>Enumerator</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow4" class="tabs3">
+    <ul class="tablist">
+      <li><a href="#index_c"><span>c</span></a></li>
+      <li><a href="#index_d"><span>d</span></a></li>
+      <li><a href="#index_i"><span>i</span></a></li>
+      <li><a href="#index_m"><span>m</span></a></li>
+      <li><a href="#index_n"><span>n</span></a></li>
+      <li><a href="#index_o"><span>o</span></a></li>
+      <li><a href="#index_p"><span>p</span></a></li>
+      <li><a href="#index_r"><span>r</span></a></li>
+      <li><a href="#index_s"><span>s</span></a></li>
+      <li><a href="#index_t"><span>t</span></a></li>
+      <li><a href="#index_u"><span>u</span></a></li>
+      <li class="current"><a href="#index_~"><span>~</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -79,7 +96,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,13 +106,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 
 <div class="contents">
-<div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div><ul>
+<div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div>
+
+<h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
 <li>CircularBuffer()
 : <a class="el" href="classCircularBuffer.html#ab60ef8ee19908262fcad634ab0722966">CircularBuffer&lt; T &gt;</a>
 </li>
+<li>clientIp
+: <a class="el" href="classSayamiSim.html#a52d09574c9d640d52b3857ff333bc632">SayamiSim</a>
+</li>
+<li>Controller()
+: <a class="el" href="classController.html#a95c56822d667e94b031451729ce069a9">Controller</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
+<li>DataRecorder()
+: <a class="el" href="classDataRecorder.html#a209cfaa161ce16323157d06302eccc81">DataRecorder</a>
+</li>
+<li>Display()
+: <a class="el" href="classDisplay.html#ae972fffea6f7ca1d627ef48c3d841bb3">Display</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
 <li>init()
-: <a class="el" href="classServo.html#a08d7834b27790aee5c1694398a9c1ce5">Servo</a>
+: <a class="el" href="classController.html#a9904f7fc1d538558a197157c24d69478">Controller</a>
+, <a class="el" href="classDataRecorder.html#abe075399543ca19c1b80487eb9be08d2">DataRecorder</a>
+, <a class="el" href="classDisplay.html#aacbf91b9f8c57fc2cb892c45fd44e655">Display</a>
+, <a class="el" href="classServo.html#a08d7834b27790aee5c1694398a9c1ce5">Servo</a>
 , <a class="el" href="classSystem.html#ae5928a3751d52745b76feca40666c31f">System</a>
+, <a class="el" href="classUDPCommunications.html#a50a0c67e1a520f7dd722f59cfa2be14d">UDPCommunications</a>
 </li>
 <li>insert()
 : <a class="el" href="classCircularBuffer.html#a8ff36263af984ee578c6a02eef6e7796">CircularBuffer&lt; T &gt;</a>
@@ -106,6 +149,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>isFull()
 : <a class="el" href="classCircularBuffer.html#a13523b0c284bba7d7aebc8767a94cd84">CircularBuffer&lt; T &gt;</a>
 </li>
+</ul>
+
+
+<h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
 <li>MODE0
 : <a class="el" href="classexploringRPi_1_1SPIDevice.html#ab9ee91d849351100cf16d6e4cb722ef6a10b43902b1e74a894a7b7f8b6de3378a">exploringRPi::SPIDevice</a>
 </li>
@@ -118,20 +165,49 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>MODE3
 : <a class="el" href="classexploringRPi_1_1SPIDevice.html#ab9ee91d849351100cf16d6e4cb722ef6a181f58cf1a895e5784399298751b3291">exploringRPi::SPIDevice</a>
 </li>
+</ul>
+
+
+<h3><a class="anchor" id="index_n"></a>- n -</h3><ul>
+<li>normalize_servo_pos()
+: <a class="el" href="classServo.html#a9a3920075230a6558644182127b436a0">Servo</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_o"></a>- o -</h3><ul>
 <li>open()
 : <a class="el" href="classexploringRPi_1_1SPIDevice.html#a762741a033edc00d5acabba08f033479">exploringRPi::SPIDevice</a>
 </li>
 <li>operator=()
 : <a class="el" href="classCircularBuffer.html#a05cec2815dd39b4fe546f8866127d9a3">CircularBuffer&lt; T &gt;</a>
 </li>
+</ul>
+
+
+<h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
 <li>printall()
 : <a class="el" href="classCircularBuffer.html#a6311159923d2fda338342a0695f9b79b">CircularBuffer&lt; T &gt;</a>
 </li>
 <li>printdatalogtofile()
 : <a class="el" href="classCircularBuffer.html#a8bc2c1a43d217947d89317525d369746">CircularBuffer&lt; T &gt;</a>
 </li>
+</ul>
+
+
+<h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
 <li>removeitem()
 : <a class="el" href="classCircularBuffer.html#a337edf5777f4e23cc35846875f54a257">CircularBuffer&lt; T &gt;</a>
+</li>
+<li>run()
+: <a class="el" href="classSayamiSim.html#a054719d587027d42c638927d49d8f61c">SayamiSim</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
+<li>SayamiSim()
+: <a class="el" href="classSayamiSim.html#a35b2dea8c4638d08cd5695060816a591">SayamiSim</a>
 </li>
 <li>size()
 : <a class="el" href="classCircularBuffer.html#ad28a02b7782b434bea3138efeaece0f0">CircularBuffer&lt; T &gt;</a>
@@ -143,23 +219,50 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="classexploringRPi_1_1SPIDevice.html#ab9ee91d849351100cf16d6e4cb722ef6">exploringRPi::SPIDevice</a>
 </li>
 <li>start()
-: <a class="el" href="classServo.html#a6f4ae4fc522df1ec69e50d42eb21bed5">Servo</a>
+: <a class="el" href="classController.html#ad535ad74055e645b7f44b7feeb4e82a8">Controller</a>
+, <a class="el" href="classDataRecorder.html#a37e2890bdfffa52c07e6dc758f7f0eee">DataRecorder</a>
+, <a class="el" href="classDisplay.html#a48000dd5254ed2016b138111732ccc55">Display</a>
+, <a class="el" href="classServo.html#a6f4ae4fc522df1ec69e50d42eb21bed5">Servo</a>
 , <a class="el" href="classSystem.html#a46b629e7c09840071570332d4e9a907d">System</a>
+, <a class="el" href="classUDPCommunications.html#a74bf998a5a2355d6bca569dfa3df02a4">UDPCommunications</a>
 </li>
 <li>stop()
-: <a class="el" href="classServo.html#aef590ce5ad82d3373abecd04c521d163">Servo</a>
+: <a class="el" href="classController.html#ad2abd6ee544cb1cb39705f31c6700f0c">Controller</a>
+, <a class="el" href="classDataRecorder.html#af5641936d7ce0adf490c67186995523e">DataRecorder</a>
+, <a class="el" href="classDisplay.html#afee90164f8614ff8210aef8816d578c3">Display</a>
+, <a class="el" href="classServo.html#aef590ce5ad82d3373abecd04c521d163">Servo</a>
 , <a class="el" href="classSystem.html#aec90bf08b30b1944e5c8074387ed7354">System</a>
+, <a class="el" href="classUDPCommunications.html#a71fc668d8e48b71ade359e340251433d">UDPCommunications</a>
 </li>
 <li>System()
 : <a class="el" href="classSystem.html#ae317936c9bcf1374d61745572e0f2f8a">System</a>
 </li>
+</ul>
+
+
+<h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
 <li>transfer()
 : <a class="el" href="classexploringRPi_1_1SPIDevice.html#a854a2d532ab335ab2b3747349a73b9c5">exploringRPi::SPIDevice</a>
 </li>
-<li>update()
-: <a class="el" href="classServo.html#a69ee8dc47d36d5b6cf4bb99f11cf9c52">Servo</a>
-, <a class="el" href="classSystem.html#add4b09ec4fb0679b8623c01218cafa5b">System</a>
+</ul>
+
+
+<h3><a class="anchor" id="index_u"></a>- u -</h3><ul>
+<li>UDPCommunications()
+: <a class="el" href="classUDPCommunications.html#a66606660697c8c934ee43b9688d2052a">UDPCommunications</a>
 </li>
+<li>update()
+: <a class="el" href="classController.html#a7d04c17913f04f99429aa29fa8505484">Controller</a>
+, <a class="el" href="classDataRecorder.html#a1aba26b4ee021b95d64e939881257f9e">DataRecorder</a>
+, <a class="el" href="classDisplay.html#ad2740b779d61e461c4dcaaf34f1fcd8f">Display</a>
+, <a class="el" href="classServo.html#a69ee8dc47d36d5b6cf4bb99f11cf9c52">Servo</a>
+, <a class="el" href="classSystem.html#add4b09ec4fb0679b8623c01218cafa5b">System</a>
+, <a class="el" href="classUDPCommunications.html#a0613a0774d91e35e5f573ff7de9a4d86">UDPCommunications</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_~"></a>- ~ -</h3><ul>
 <li>~CircularBuffer()
 : <a class="el" href="classCircularBuffer.html#a90268eaf2901ea77181ed353d3716c21">CircularBuffer&lt; T &gt;</a>
 </li>
@@ -167,7 +270,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 22 2019 20:51:47 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 22 2019 22:45:26 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

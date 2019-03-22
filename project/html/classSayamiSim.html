@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -83,6 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classSayamiSim-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">SayamiSim Class Reference</div>  </div>
@@ -93,23 +94,56 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a35b2dea8c4638d08cd5695060816a591"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a35b2dea8c4638d08cd5695060816a591"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSayamiSim.html#a35b2dea8c4638d08cd5695060816a591">SayamiSim</a> ()</td></tr>
+<tr class="memdesc:a35b2dea8c4638d08cd5695060816a591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
+<tr class="separator:a35b2dea8c4638d08cd5695060816a591"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a054719d587027d42c638927d49d8f61c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a054719d587027d42c638927d49d8f61c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSayamiSim.html#a054719d587027d42c638927d49d8f61c">run</a> ()</td></tr>
+<tr class="memdesc:a054719d587027d42c638927d49d8f61c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run method. Runs for a default specified time. <br /></td></tr>
 <tr class="separator:a054719d587027d42c638927d49d8f61c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1db59f67b9b88b19e15f2ea058e1cc41"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1db59f67b9b88b19e15f2ea058e1cc41"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (high_resolution_clock::duration duration)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSayamiSim.html#a1db59f67b9b88b19e15f2ea058e1cc41">run</a> (high_resolution_clock::duration duration)</td></tr>
+<tr class="memdesc:a1db59f67b9b88b19e15f2ea058e1cc41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run method. Runs for the specified time. <br /></td></tr>
 <tr class="separator:a1db59f67b9b88b19e15f2ea058e1cc41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a52d09574c9d640d52b3857ff333bc632"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSayamiSim.html#a52d09574c9d640d52b3857ff333bc632">clientIp</a> = &quot;none&quot;</td></tr>
+<tr class="separator:a52d09574c9d640d52b3857ff333bc632"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The main class for the flight simulator. It is a manager for all the subsystems in the program. Creates the manager and schedules processes, events and channels for communication </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a52d09574c9d640d52b3857ff333bc632"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string SayamiSim::clientIp = &quot;none&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>static value that sets the client IP to communicate via UDP Note that this value must be set before the <a class="el" href="classSayamiSim.html#a054719d587027d42c638927d49d8f61c" title="Run method. Runs for a default specified time. ">run()</a> method is called to take effect </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="sayamisim_8h_source.html">sayamisim.h</a></li>
 <li>sayamisim.cc</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 22 2019 20:51:46 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 22 2019 22:45:24 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
