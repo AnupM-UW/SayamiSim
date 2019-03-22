@@ -36,21 +36,23 @@ void System::update() {
         update_heading(v);
         update_aoa(a);
     }
+
+    high_resolution_clock::time_point now = high_resolution_clock::now();
+
     json attitude;
     attitude["lat"] = _lat;
     attitude["long"] = _long;
     attitude["alt"] = _altitude;
     attitude["hdg"] = _heading;
     attitude["aoa"] = _aoa;
+    attitude["timestamp"] = milliseconds_type(now.time_since_epoch()).count(); // milliseconds since Jan 1, 00:00:00 1970 UTC
 
     // we will not yet send speed, radio altitude, etc.
 
     _attitudeChannel->send(attitude);
 
-    // now send updates
-    high_resolution_clock::time_point now = high_resolution_clock::now();
     high_resolution_clock::duration dur = now - _prevReportTime;
-
+    // now send update event if necessary
     if (milliseconds_type(dur).count() > UPDATE_INTERVAL) {
         _prevReportTime = now;
         emit(Event("send_data", attitude));

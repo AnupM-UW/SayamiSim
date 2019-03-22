@@ -3,10 +3,11 @@
 
 #include <iostream>
 #include <string>
-
+#include <ctime>
 #include <thread>
 #include "../elma_port/elma.h"
 #include "circularbuffer.h"
+#include "system.h"
 
 using namespace elma;
 using namespace std::chrono;
@@ -30,8 +31,18 @@ using json = nlohmann::json;
 
         private:
 
+            void save_data();
+
             high_resolution_clock::time_point _prevSaveTime;
-            CircularBuffer<string> _buffer;
+            CircularBuffer<json> _buffer;
+
+            const int SAVE_INTERVAL = 5000; // 15000 milliseconds, or 15 seconds
+                                             // we would want this to be faster in future
+
+            Channel* _controllerChannel;
+            Channel* _attitudeChannel;
+
+            int _fileNum;
 
     };
 

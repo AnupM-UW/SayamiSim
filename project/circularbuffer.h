@@ -32,7 +32,7 @@ template <typename T>
 class CircularBuffer
 {
   public:
-    CircularBuffer();
+    CircularBuffer(unsigned int capacity = TELEMETRYSIZE);
 
     ~CircularBuffer();
 
@@ -74,16 +74,15 @@ class CircularBuffer
 };
 
 template <typename T>
-CircularBuffer<T>::CircularBuffer() {
-    int capacity = 35;
+CircularBuffer<T>::CircularBuffer(unsigned int capacity) {
     if (capacity <= 1) {
         throw std::range_error("Invalid size for circular buffer");
     }
-    _capacity = _capacity;
+    _capacity = capacity;
     _startIdx = 0;
     _endIdx = 0;
     _flagEmpty = true;
-    _circularbuffer = new T[_capacity];
+    _circularbuffer = new T[capacity];
 }
 
 template <typename T>
