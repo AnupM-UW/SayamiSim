@@ -7,7 +7,7 @@ This project is to create a simulation framework using Raspberry Pi. It is a dis
 
 The project makes use of sensors and actuators (joystick, servo) on a Raspberry Pi using PWM and SPI bus for joystick and servo control. Using the Elma framework, data is transferred to separate receiving processes from the sender process for further consumption. Processes include a system controller (for flight dynamics), joystick controller, servo controller, UDP networking processor and data logger process.
 
-The core idea behind this flight simulator is to have separate hosts that communicate together, not only as in traditional multiplayer games, but also as a collaborative flight simulator (where multiple pilots can together fly a plane). In addition, multiple device peripherals (e.g. panels) can listen to the simulator data in a plug-in fashion and display flight data. One can imagine peripherals/panels that run on separate microcontrollers, e.g. a separate airspeed indicator, Communications Radio, ambient sensors, Horizontal Situation Indicator, etc. (HSI). See [here] (https://www.flightsimwebshop.com/en/flightsimulator-modules/auto-pilot-modules/) and [here](https://xforcepc.com/english/flight-simulation/saitek-x-plane-peripherals.html) for examples of panels created for the X-Plane simulator and Microsoft Flight Simulator. 
+The core idea behind this flight simulator is to have separate hosts that communicate together, not only as in traditional multiplayer games, but also as a collaborative flight simulator (where multiple pilots can together fly a plane). In addition, multiple device peripherals (e.g. panels) can listen to the simulator data in a plug-in fashion and display flight data. One can imagine peripherals/panels that run on separate microcontrollers, e.g. a separate airspeed indicator, Communications Radio, ambient sensors, Horizontal Situation Indicator, etc. (HSI). See [here](https://www.flightsimwebshop.com/en/flightsimulator-modules/auto-pilot-modules/) and [here](https://xforcepc.com/english/flight-simulation/saitek-x-plane-peripherals.html) for examples of panels created for the X-Plane simulator and Microsoft Flight Simulator. 
 
 With the UDP based communication, and a plugin architecture enabled, we are able to view flight data on different computers. In our archetypal example, the simulator itself is running on Raspberry Pi, but data is sent over UDP to a Windows 10 computer that displays the state of the sensors (in our case, the heading of the flight displayed as a compass rose).
 
@@ -202,7 +202,7 @@ Following are the identified milestones for the project:
 - Milestone 4: Create UI framework for representing state of the simulator. Expected completion: 3/17/2019 (Completed)
 - Milestone 5: Create processes to communicate simulation state. Initial communication modes will be heading and flight recorder data. Expected completion: 3/19/2019 (Completed)
 - Milestone 6: Integration and Testing. Finish remaning pieces. Expected completion: 3/21/2019 (Completed)
-- Documentation: Expected completion: 3/21/2019 (In Progress)
+- Documentation: Expected completion: 3/21/2019 (Completed) Docs are available on https://anupm-uw.github.io/SayamiSim/
 
 Stretch Goals:
 - Use UDP to communicate the system data between multiple hosts. (Accomplished)
@@ -212,14 +212,13 @@ What is Working So Far
 ---
 __Everything, including the UDP communication (Stretch goals)! Yay!__
 
-As of now, the following is functional:
+As of now, everything I set out to do is functional, including stretch goals:
 - The UDP communication using P2P and Multicast is completed
 - Windows client app to listen to UDP and display data is completed
 - Joystick and Servo are hooked up and functional
 - UI for the Simulator in Raspberry Pi (using Cairo and Gtk windowing) is completed
 - Data Recorder is completed
-- The sensor inputs to the joystick, ADC and Servo are working. My focus so far has been to get the sensors and actuators working. In the github repo, the 'joystick', 'servo' are standalone programs that work with Raspberry Pi. This part was done standalone but will next be merged to the main project.
-- The skeletal code with the basic framework using elma to control the simulator is uploaded under 'project' folder. It is functional. I reprioritized this to be earlier than the graphical UI. Currently, the skeletal code does not hook up to the UI or the actuators. Instead it fakes the data with random values and displays the data as text.
+- The sensor inputs to the joystick, ADC and Servo are working. All sensors and actuators working. In the github repo, the 'joystick', 'servo' are standalone programs that work with Raspberry Pi. This part was done standalone but merged to the main project.
 - I also uploaded the current version of the cairo code and ImageTransform folder. ImageTransform folder is my experiments to eventually do a perspective scale on the image. This is very much Work in Progress (WIP). Test.htm file is a sample output from ImageTransform.
 
 
