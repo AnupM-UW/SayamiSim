@@ -1,0 +1,8 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$classController.html" title="Controller" alt="" coords="163,5,247,32"/>
+<area shape="rect" id="node3" href="$classDataRecorder.html" title="DataRecorder" alt="" coords="150,56,259,83"/>
+<area shape="rect" id="node4" href="$classDisplay.html" title="Display" alt="" coords="171,107,239,133"/>
+<area shape="rect" id="node5" href="$classServo.html" title="Servo" alt="" coords="175,157,234,184"/>
+<area shape="rect" id="node6" href="$classSystem.html" title="A Flight Simulator Process that models flight dynamics and manages the state of the system..." alt="" coords="169,208,240,235"/>
+<area shape="rect" id="node7" href="$classUDPCommunications.html" title="UDPCommunications" alt="" coords="125,259,284,285"/>
+</map>
