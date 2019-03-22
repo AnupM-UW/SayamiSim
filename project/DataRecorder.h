@@ -37,7 +37,7 @@ using json = nlohmann::json;
             high_resolution_clock::time_point _prevSaveTime;
             CircularBuffer<json> _buffer;
 
-            const int SAVE_INTERVAL = 5000; // 15000 milliseconds, or 15 seconds
+            const int SAVE_INTERVAL = 15000; // 15000 milliseconds, or 15 seconds
                                              // we would want this to be faster in future
 
             Channel* _controllerChannel;

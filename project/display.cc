@@ -119,7 +119,7 @@ void do_drawing(cairo_t *cr) {
     cairo_paint(cr);
     // cairo_destroy(fg);
 
-    cout<<"Finished Drawing"<<endl;
+    //// cout<<"Finished Drawing"<<endl;
 
 }
 

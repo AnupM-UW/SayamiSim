@@ -6,6 +6,14 @@ using namespace std::chrono;
 using namespace std;
 using json = nlohmann::json;
 
+string json_tostring(const void *obj) {
+    if (obj == nullptr) {
+        return string("");
+    }
+    const json *j = (const json*) obj;
+    return j->dump();
+}
+
 DataRecorder::DataRecorder() : DataRecorder("datarecorder") {
 }
 
@@ -75,13 +83,15 @@ void DataRecorder::save_data() {
         found = v.find(needle);
     }
     _fileNum = (_fileNum + 1) % 1000;
-    string filename = v + to_string(_fileNum);
+    string filename = v + to_string(_fileNum) + ".log";
     needle = ":";
     found = filename.find(needle);
     while (found != string::npos) {
         filename.replace(found, needle.length(), "_");
-        cout<<"* Saving Filename:" << filename<<endl;
         found = filename.find(needle);
     }
+    cout<<"* Saving Filename:" << filename<<endl;
+    if (!_buffer.printdatalogtofile(filename.c_str(), json_tostring)) {
+        perror("unable to print log file");
+    }
 }
-

@@ -229,6 +229,7 @@ bool CircularBuffer<T>::printdatalogtofile(const char *filename,
             // printHandler(i);//_circularbuffer[start]);
             // start and end can coincide when buffer is full too, hence the do loop to force
             fprintf(fp, s.c_str());
+            fprintf(fp, "\n");
             start = (start + 1) % _capacity;
         } while (start != _endIdx);
     }

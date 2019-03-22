@@ -45,7 +45,7 @@ void Controller::update() {
     std::tuple<double,double> cpos = get_controller_pos();
     j["controllerPosX"] = std::get<0>(cpos);
     j["controllerPosY"] = std::get<1>(cpos);
-    cout<<"Controller Pos: "<<std::get<0>(cpos)<<","<<std::get<1>(cpos)<<endl;
+    //// cout<<"Controller Pos: "<<std::get<0>(cpos)<<","<<std::get<1>(cpos)<<endl;
     _controllerChannel->send(j); // updated the controller position
 }
 

@@ -33,7 +33,7 @@ SayamiSim::SayamiSim() :
 }
 
 void SayamiSim::run() {
-    _mgr.run(35_s);
+    _mgr.run(95_s);
 }
 
 void SayamiSim::run(high_resolution_clock::duration duration) {
