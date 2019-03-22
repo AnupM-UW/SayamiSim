@@ -12,18 +12,39 @@ using namespace elma;
 using namespace std::chrono;
 using namespace std;
 
+//! A Servo class
+//! Derived from the Process class and gets scheduled by the Manager class
+//! Listens to the Controller channel to gather data about the joystick
+//! and moves the servo position to mimic the position of the joystick controller
+
 class Servo : public Process {
     public:
         Servo();
 
         Servo(string name);
 
+        //! Initialization method. 
+        //! It will usually be called once, after all processes and
+        //! communication objects have been added to the manager, but before
+        //! the Manager starts running.
         void init();
 
+        //! Start method. 
+        //! Called just before the manager starts running.
+        //! It may be called multiple times, if the manager is started and stopped.
+        //! Session type initialization should happen here.
         void start();
 
+        //! Update method. 
+        //! Called repeatedly by the manager at a frequency
+        //! determined by the period used when the process is scheduled with the
+        //! Manager
+        //! Updates the servo position to match the joystick
         void update();
 
+        //! Stop method. All session cleanup happens here
+        //! It may be called multiple times, if the manager is started and stopped.
+        //! stops the servo and moves it back to neutral position
         void stop();
 
         int normalize_servo_pos(int controllerPos);

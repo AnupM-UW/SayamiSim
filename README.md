@@ -124,6 +124,27 @@ The servo runs like a slave to the joystick. The original idea was based on the 
 
 WiringPI code is used to drive the PWM for the Servo. WiringPI uses memory mapped files for fast output. However, it is software based PWM and not as accurate as one would hope. There is also a lag (in the range of 0.1 sec I would say) before it reaches it desired position, so very fast input to the servo can make it jitter. That is why in my code, the servo actuation is slowed down deliberately.
 
+Pin Assignment for MCP3008 Analog to Digital Converter:
+| MCP3008  | RPi Pin  |
+|----------|----------|
+|          |          |
+|          |          |
+|          |          |
+
+Pin Assignment for Joystick
+| MCP3008  | Joystick Pin  |
+|----------|---------------|
+|          |               |
+|          |               |
+|          |               |
+
+Pin Assignment for Servo (SG90)
+| Servo  | RPi Pin                     |
+|--------|-----------------------------|
+|        |         PWM0, Pin12         |
+|        |             Gnd             |
+|        |   3.3V Vcc via 1K resistor  |
+
 Running the Simulator
 ---
 Make sure to run as sudo. I have found that not running as sudo RELIABLY MAKES THE RASPBERRY PI HANG AND REQUIRE HARD REBOOT. This is because the pwmWrite function in WiringPi library (used by the servo) requires it and hangs at that point. It would be nice to check to see if you are running with sudo, but that is something for another time.

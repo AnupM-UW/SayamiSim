@@ -12,6 +12,11 @@ using namespace std::chrono;
 using namespace std;
 using namespace exploringRPi;
 
+//! A Controller class for joystick input
+//! Derived from the Process class and gets scheduled by the Manager class
+//! Will write to the Controller Channel the values read by the joystick (X and Y direction)
+//! Joystick hat switch is not used by the program and hence not available
+
 class Controller : public Process {
     public:
         Controller();

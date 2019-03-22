@@ -17,18 +17,36 @@ using namespace elma;
 using namespace std::chrono;
 using namespace std;
 
+    //! A Flight Simulator Process that models flight dynamics and manages the state of the system
     class System : public Process {
         public:
+            //! Constructor
             System();
 
+            //! Constructor
+            //! \param name The name of the Process
             System(string name);
 
+            //! Initialization method. 
+            //! It will usually be called once, after all processes and
+            //! communication objects have been added to the manager, but before
+            //! the Manager starts running.
             void init();
 
+            //! Start method. 
+            //! Called just before the manager starts running.
+            //! It may be called multiple times, if the manager is started and stopped.
+            //! Session type initialization should happen here.
             void start();
 
+            //! Update method. 
+            //! Called repeatedly by the manager at a frequency
+            //! determined by the period used when the process is scheduled with the
+            //! Manager (see Manager::schedule).
             void update();
 
+            //! Stop method. All session cleanup happens here
+            //! It may be called multiple times, if the manager is started and stopped.        
             void stop();
 
 

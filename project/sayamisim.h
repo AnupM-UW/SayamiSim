@@ -21,6 +21,9 @@ using namespace elma;
 using namespace std::chrono;
 using namespace std;
 
+//! The main class for the flight simulator.
+//! It is a manager for all the subsystems in the program. Creates the manager
+//! and schedules processes, events and channels for communication
 
 class SayamiSim {
     public:

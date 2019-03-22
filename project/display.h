@@ -35,6 +35,12 @@ gboolean time_handler(GtkWidget *widget);
 
 // Display* currentDisplay = NULL;
 
+//! A Display class to display flight simulator output to a Window
+//! Derived from the Process class and gets scheduled by the Manager class
+//! Listens to the Attitude channel to gather data display a flight simulator
+//! visual to the screen. Uses Gtk 3.0 and Cairo graphics to display graphical content
+//! to the screen in a window
+
 class Display : public Process {
     public:
         Display();

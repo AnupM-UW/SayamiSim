@@ -28,30 +28,62 @@ using namespace std;
 
 typedef string (*string_converter_t) (const void*);
 
+//! A Circular Buffer class that is templated to take diverse type arguments
+//! The capacity is defined at construction time. Oldest items are culled from
+//! the buffer if the buffer gets filled.
 template <typename T>
 class CircularBuffer
 {
   public:
+    //! Constructor. Takes a default size parameter as capacity.
+    //! This is a fixed size capacity (i.e. does not grow). Items
+    //! added beyond the capacity/size will overwrite the oldest items
     CircularBuffer(unsigned int capacity = TELEMETRYSIZE);
 
+    //! Default destructor
     ~CircularBuffer();
 
+    //! Copy Constructor
     CircularBuffer(const CircularBuffer& other);
 
+    //! Assignment operator for assignment of one circular buffer to another
     CircularBuffer& operator=(const CircularBuffer& rhs);
 
+    //! Getter
+    //! \return Whether the buffer is full, i.e. new additions will over-write the oldest values.
     bool isFull() const;
 
+    //! Getter
+    //! \return Whether the buffer is empty (no items in it).
     bool isEmpty() const;
 
+    //! Getter
+    //! \return The number of items in the circular buffer.
     unsigned int size() const;
 
+    //! insert method. This method will insert items at
+    //! the end of the circular buffer. If the buffer is already
+    //! full, the oldest items will be deleted from the buffer
+    //! \param data The object to be inserted at the end of the buffer
+    //! \return whether the insertion was successful
     bool insert(T data);
 
+    //! removeitem method. 
+    //! Will remove the last inserted item from the 
+    //! circular buffer and will return a copy of the removed item
+    //! throws an exception if the buffer is empty and you try to remove an item
+    //! \return a copy of the removed item
     T removeitem();
 
+    //! printall method. 
+    //! Will print to console all the items that are in the buffer, first to last
+    //! \param printHandler Address of a function that can print out the data as as string
     void printall(string_converter_t printHandler) const;
 
+    //! printdatalogtofile method. 
+    //! Will print to a file all the items that are in the buffer, first to last.
+    //! \param filename Name of the file to be written
+    //! \param printHandler Address of a function that can print out the data as as string
     bool printdatalogtofile(const char *filename,
                    string_converter_t printHandler) const;
 
