@@ -110,44 +110,62 @@ Sensors/Actuators Used
 The project uses Raspberry Pi and sensors. The components used are:
 - Joystick (analog)
 - Analog to Digital Converter (ADC) - MCP3008
-- Servo (SG80)
+- Servo (SG90)
 
 Hooking Up the Actuators
 ---
-The Joystick needs to be hooked up to the SPI pins on Raspberry Pi (there is only one SPI channel available on Raspberry Pi 3). Not only that, the SPI bus is not enabled by default and can be enabled from raspi-config app. Enabling the SPI bus is a tricky affair (link forthcoming) since it may not always work. However confirm that the files spidev0.0 and spidev0.1 files are present in /dev folder.
+The Joystick needs to be hooked up to the SPI pins on Raspberry Pi (there is only one SPI channel available on Raspberry Pi 3). Not only that, the SPI bus is not enabled by default and can be enabled from raspi-config app. Enabling the SPI bus is a tricky affair since it may not always work. However confirm that the files spidev0.0 and spidev0.1 files are present in /dev folder. Instructions to enable SPI on RPi are [here](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/) but I also found Derek Molloy's Programming Raspberry Pi book
 
-The Joystick is an analog device, and since RPi does not have an onboard analog to digital converter (ADC), it has to be digitized before the input is fed to the RPi. Several ADC are suitable for this task such as MCP3008 and MCP3208. I used MCP3008 for this exercise. It has a 10 bit ADC (2^10 or 1024 levels).
+The Joystick is an analog device, and since RPi does not have an onboard analog to digital converter (ADC), it has to be digitized before the input is fed to the RPi. Several ADC are suitable for this task such as MCP3008 and MCP3208, or even MCP3004. I used MCP3008 for this exercise. It has a 10 bit ADC with 2^10 or 1024 levels of digital output. Value 1 indicates one extreme of the joystick movement in a particular axis and value 1023 the other. Using the Joystick coupled with the MCP3008 is no different that connecting any analog sensor such as an Light Dependent Resistor (LDR), or plant moisture sensor. [Here](https://www.raspberrypi-spy.co.uk/2013/10/analogue-sensors-on-the-raspberry-pi-using-an-mcp3008/) is an example with an LDR and [this](https://www.instructables.com/id/Wiring-up-a-MCP3008-ADC-to-a-Raspberry-Pi-model-B-/) is a plant moisture sensor. The pin assignments are essentially the same, but I didn't connect the joystick's SW switch since I didn't need it. Datasheet for MCP3008 is [here](https://cdn-shop.adafruit.com/datasheets/MCP3008.pdf). See below table for pinouts.
 
-Raspberry Pi has PWM output pins. For our Servo, we use the PWM output. There is a calculation you have to do determine the duty cycle. The comments in the code in servo.h/servo.cc walk you through the calculations. I'll add those details here as well later -- forthcoming.
+![MCP3008](mcp3008.png)
 
-The servo runs like a slave to the joystick. The original idea was based on the disagreement people have (e.g. in the Airbus A320) where the joystick input from one pilot is not mirrored in the joystick of the other pilot (although the aircraft has other methods of warning when there is conflicting input from the two pilots). But at this point it is not that interesting. Since I only used one servo, it runs works in the X-axis direction. Adding the Servo made it a necessity to run with sudo (bummer!).
+Raspberry Pi has PWM output pins. For our Servo (SG90), we use the PWM output. There is a calculation you have to do determine the duty cycle (RPi PWM is clocked at 19.2MHz freq). The comments in the code in servo.h/servo.cc walk you through the calculations. The width of the duty cycle determines where the servo arm will end up (see servo.cc). The datasheet for the servo [here](http://www.ee.ic.ac.uk/pcheung/teaching/DE1_EE/stores/sg90_datasheet.pdf) is helpful to do that calculation. Also, Derek Molloy's "Exploring Raspberry Pi" book has more details that were useful for the PWM.
+
+The servo (SG90) runs like a slave to the joystick. The original idea was based on the disagreement people have (e.g. in the Airbus A320 aircraft) where the joystick input from one pilot is not mirrored in the joystick of the other pilot (although the aircraft has other methods of warning when there is conflicting input from the two pilots). But at this point, it is not really that interesting. Since I only used one servo, it runs works in the X-axis direction. Adding the Servo made it a necessity to run with sudo (bummer!). Be careful with connections since we use the 5V supply for the servo. Misconnecting can damage the RPi.
 
 WiringPI code is used to drive the PWM for the Servo. WiringPI uses memory mapped files for fast output. However, it is software based PWM and not as accurate as one would hope. There is also a lag (in the range of 0.1 sec I would say) before it reaches it desired position, so very fast input to the servo can make it jitter. That is why in my code, the servo actuation is slowed down deliberately.
 
 Pin Assignment for MCP3008 Analog to Digital Converter:
-| MCP3008  | RPi Pin  |
-|----------|----------|
-|          |          |
-|          |          |
-|          |          |
+
+```
+        MCP3008         |       RPi Pin        | Notes
+Analog Input (Pin 1-8 ) |    Joystick inputs   | Only Pins 2 and 3 connected to VRx and VRy on joystick (see below)
+VDD  (Pin 16)           |   3.3V               |
+VREF (Pin 15)           |   3.3V               |
+AGND (Pin 14)           | ANALOG GND (RPI GND) |
+CLK  (Pin 13)           | SPIO_CLK   (Pin  23) |
+DOUT (Pin 12)           | SPIO_MOSI  (Pin  21) |
+DIN  (Pin 11)           | SPIO_MISO  (Pin  19) |
+CS   (Pin 10)           | SPIO_CEO_N (Pin  24) |
+DGND (Pin  9)           | DIGI GND   (RPI GND) |
+```
 
 Pin Assignment for Joystick
-| MCP3008  | Joystick Pin  |
-|----------|---------------|
-|          |               |
-|          |               |
-|          |               |
+```
+| Joystick |   ADC/RPi Pin  |
+|          |                |
+|   GND    |    RPi GND     |
+|   Vin    |    RPi 3.3V    |
+|   SW     |  Not connected |
+|   VRx    |   MCP3008 Pin2 |
+|   VRy    |   MCP3008 Pin3 |
+```
 
 Pin Assignment for Servo (SG90)
-| Servo   | RPi Pin                     |
-|---------|-----------------------------|
-|    A    |         PWM0, Pin12         |
-|    B    |             Gnd             |
-|    C    |   3.3V Vcc via 1K resistor  |
+```
+| Servo            |         RPi Pin          |
+|                  |                          |
+| Yellow wire      |  PWM0, GPIO18 (Pin12)    |
+| Black/Brown wire |       GND (Pin 20)       |
+| Red Wire         |  5V Vcc via 1K resistor  |
+```
+
+![Pin connections to RPi on breadboard](RPiConnections.jpg)
 
 Running the Simulator
 ---
-Make sure to run as sudo. I have found that not running as sudo RELIABLY MAKES THE RASPBERRY PI HANG AND REQUIRE HARD REBOOT. This is because the pwmWrite function in WiringPi library (used by the servo) requires it and hangs at that point. It would be nice to check to see if you are running with sudo, but that is something for another time.
+Make sure to run as sudo. ⚠️️ I have found that not running as sudo RELIABLY MAKES THE RASPBERRY PI HANG AND REQUIRE HARD REBOOT ⚠️. This is because the pwmWrite function in WiringPi library (used by the servo) requires it and hangs at that point. It would be nice to check to see if you are running with sudo, but that is something for another time. There may be options to change the Raspbian image to allow it as well. This is an ultimately an OS restriction in Raspbian with respect to access to GPIO pins from sysfs.
 ```
 sudo ./simulator
 ```
