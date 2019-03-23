@@ -20,6 +20,7 @@
 using namespace elma;
 using namespace std::chrono;
 using namespace std;
+using json = nlohman::json;
 
     class UDPCommunications : public Process {
         public:
@@ -59,6 +60,11 @@ using namespace std;
             //! It may be called multiple times, if the manager is started and stopped.        
             void stop();
 
+            //! Getter Unprocessed events
+            //! can be used to debug if events get queued up or the update interval
+            //! of the process is set to a low frequency by the manager
+            //! \returns list of unprocessed events (copy of the list)
+            vector<json> unprocessed_events();
 
         private:
 

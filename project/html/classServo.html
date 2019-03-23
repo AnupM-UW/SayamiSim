@@ -149,6 +149,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Normalize method. Will return size of PWM duty cycle (out of 1000) If controller pos is max 1024, it should return max value of 75 and 0 should return 25. </p><dl class="section return"><dt>Returns</dt><dd>the value between 25 and 75 to normalize the value within left and right range </dd></dl>
 <p>cout&lt;&lt;"Servo Pos:"&lt;&lt;retval&lt;&lt;endl; </p>
 
 </div>
@@ -209,7 +210,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 22 2019 22:45:24 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Mar 23 2019 04:25:06 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

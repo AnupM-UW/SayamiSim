@@ -93,7 +93,7 @@ and in the header files:
 
 Library Dependencies:
 
-- Elma: The project requires the [Elma framework](https://github.com/klavinslab/elma/blob/master/README.md), which is an event and process managment framework for embedded devices. Installation instructions for Elma framework can be found [here](https://github.com/klavinslab/elma/blob/master/README.md).
+- Elma: The project requires the [Elma framework](https://github.com/klavinslab/elma/blob/master/README.md), which is an event and process managment framework for embedded devices. Installation instructions for Elma framework can be found [here](https://github.com/klavinslab/elma/blob/master/README.md). I'm not using the latest version of the Elma library since (per Dr. Klavins) it uses the SSL libraries that are very heavy for Raspberry Pi. I forked a version of the library that does not have the Http Client embedded since I don't need it. I also removed the Address Sanitizer library extensions based on this [comment on Wikipedia](https://en.wikipedia.org/wiki/AddressSanitizer): "On average, the instrumentation increases processing time by about 73% and memory usage by 340%". On Raspberry Pi, it could be too impactful on operation and doesn't add that much value for my purpose.
 
 - WiringPi: The project also requires the WiringPi library for interacting with sensors and actuators in Raspberry Pi. The project targets Raspberry Pi 3 devices with the 40 pin connector.
 

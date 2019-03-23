@@ -3,6 +3,7 @@
 using namespace elma;
 using namespace std::chrono;
 using namespace std;
+
 const string DEFAULT_DEST = "192.168.1.20";
 
 UDPCommunications::UDPCommunications() : UDPCommunications("unnamed udp client server") {}
@@ -93,4 +94,9 @@ void UDPCommunications::update() {
 void UDPCommunications::stop() {
     _event_list.clear();
     // might have to do an unbind of the socket here and dispose of the socket ...
+}
+
+vector<json> UDPCommunications::unprocessed_events() {
+    vector<json> retval = _event_list;
+    return retval;
 }

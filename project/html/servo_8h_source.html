@@ -121,39 +121,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">void</span> stop();</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordtype">int</span> normalize_servo_pos(<span class="keywordtype">int</span> controllerPos);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        Channel* _controllerChannel;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">int</span> normalize_servo_pos(<span class="keywordtype">int</span> controllerPos);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> RANGE  = 1000; <span class="comment">// 1000 range for each PWM pulse</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> CENTER = 75;   <span class="comment">// 75/RANGE, i.e. 7.5% in our case. This is 90 deg position</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                                 <span class="comment">// this is 1.5ms duty cycle. At 50Hz, each cycle is 20ms,</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                                 <span class="comment">// so the duty cycle is</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                                 <span class="comment">// 1.5ms/20ms or 7.5%</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> LEFT   = 50;   <span class="comment">// per spec, about 0.5ms, or 2.5% pulse is left at 0 degrees (0.5ms)</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                                 <span class="comment">// In our case, we will use about 45 deg as left, which should be about</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                                 <span class="comment">// 1ms duty ycle linearly scaled (0.5ms =  0 deg, 1.5 ms =  90 deg).</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                                 <span class="comment">// cycle linearly scaled (0.5ms =  0 deg, 1.5 ms =  90 deg). Thus this</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                                 <span class="comment">// is 1ms/20ms or 5% duty pulse. Thus 50/1000</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> RIGHT  = 100;  <span class="comment">// this is about 135 degrees position, Scaling similarly,</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                                 <span class="comment">//  the duty cycle is 2ms</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                                 <span class="comment">// (note 0.5 ms = 0 deg, 1.5ms = 90 deg, 2.5 ms = 180 deg)</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                                 <span class="comment">// hence 2ms/20ms or 10% duty cycle. i.e. 100/1000</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> PWM_SERVO = 18;   <span class="comment">// PWM0, Pin12</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> BTN_GPIO  = 27;   <span class="comment">// Pin 13, GPIO27</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        Channel* _controllerChannel;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> RANGE  = 1000; <span class="comment">// 1000 range for each PWM pulse</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> CENTER = 75;   <span class="comment">// 75/RANGE, i.e. 7.5% in our case. This is 90 deg position</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                                 <span class="comment">// this is 1.5ms duty cycle. At 50Hz, each cycle is 20ms,</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                                 <span class="comment">// so the duty cycle is</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                                 <span class="comment">// 1.5ms/20ms or 7.5%</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> LEFT   = 50;   <span class="comment">// per spec, about 0.5ms, or 2.5% pulse is left at 0 degrees (0.5ms)</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                                 <span class="comment">// In our case, we will use about 45 deg as left, which should be about</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                                 <span class="comment">// 1ms duty ycle linearly scaled (0.5ms =  0 deg, 1.5 ms =  90 deg).</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                                 <span class="comment">// cycle linearly scaled (0.5ms =  0 deg, 1.5 ms =  90 deg). Thus this</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                                 <span class="comment">// is 1ms/20ms or 5% duty pulse. Thus 50/1000</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> RIGHT  = 100;  <span class="comment">// this is about 135 degrees position, Scaling similarly,</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                                 <span class="comment">//  the duty cycle is 2ms</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                                 <span class="comment">// (note 0.5 ms = 0 deg, 1.5ms = 90 deg, 2.5 ms = 180 deg)</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                                 <span class="comment">// hence 2ms/20ms or 10% duty cycle. i.e. 100/1000</span></div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordtype">bool</span> _servoActive;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;};</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> PWM_SERVO = 18;   <span class="comment">// PWM0, Pin12</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> BTN_GPIO  = 27;   <span class="comment">// Pin 13, GPIO27</span></div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keywordtype">bool</span> _servoActive;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;};</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="namespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div></div>
 <div class="ttc" id="namespacestd_1_1chrono_html"><div class="ttname"><a href="namespacestd_1_1chrono.html">chrono</a></div></div>
 <div class="ttc" id="namespaceelma_html"><div class="ttname"><a href="namespaceelma.html">elma</a></div></div>
@@ -161,7 +161,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 22 2019 22:45:23 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Mar 23 2019 04:25:05 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

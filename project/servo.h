@@ -60,6 +60,10 @@ class Servo : public Process {
         //! stops the servo and moves it back to neutral position
         void stop();
 
+        //! Normalize method. Will return size of PWM duty cycle (out of 1000)
+        //! If controller pos is max 1024, it should return max value of 75 and
+        //! 0 should return 25.
+        //! \returns the value between 25 and 75 to normalize the value within left and right range
         int normalize_servo_pos(int controllerPos);
 
 

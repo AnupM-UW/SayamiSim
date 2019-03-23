@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include "gtest/gtest.h"
+#include "../../elma_port/elma.h"
+#include "../UDPCommunications.h"
+
+#ifdef _RPI_
+#include <json/nlohmann_json.h>
+#else
+#include <json/json.h>
+#endif
+
+using namespace std;
+using namespace elma;
+using json = nlohmann::json;
+
+    class SendEventProcess : public Process {
+        public:
+        void init() {}
+        void start() {}
+        void update() {
+            json j;
+            j["test"] = 5;
+            emit(Event("send_data", j));
+        }
+        void stop() {}
+    };
+
+    TEST(UDPCommunications, SendingDoesNotBlock) {
+        UDPCommunications comms = UDPCommunications("Test comms");
+        SendEventProcess sep = SendEventProcess("SEP");
+        Manager m;
+        m
+        .schedule(comms, 10_ms)
+        .schedule(sep, 50_ms)
+        .init();
+
+        m.run(120_ms);
+        EXPECT_TRUE(comms.unprocessed_events().size() == 0);
+    }
+
+    TEST(UDPCommunications, SendRecv) {
+        UDPCommunications comms = UDPCommunications("Test comms");
+        SendEventProcess sep = SendEventProcess("SEP");
+
+        Manager m;
+        m
+        .schedule(sep, 10_ms)
+        .schedule(comms, 200_ms)
+        .init();
+        m.run(60_ms);
+        // note that comms is not scheduled for 150ms and will not run
+        // all the data will sit unprocessed
+        EXPECT_TRUE(comms.unprocessed_events().size() >= 5);
+    }
+
+GTEST_API_ int main(int argc, char **argv) {
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}
