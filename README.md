@@ -62,6 +62,8 @@ There are other folders at the root level that are standalone programs I used fo
 
 The folder SimulatorListenerUDP.Windows holds the Windows UDP client app.
 
+The folder /project/test has a few unit tests (It was not originally in my plan to add unit tests since I didn't expect to have time for it, but I was able to add a few)
+
 Installation/Compilation Notes:
 ---
 Note that the project can only be compiled in situ in Raspberry Pi (perhaps on a RPi Docker container as well) due to dependency on Gtk and Cairo, among other things. It would be meaningless to compile elsewhere since there are hardware dependencies for the Joystick and Servo, and the pin number assignments for the hardware may not be portable. I cannot make a dependency-less Docker container for this project.
@@ -218,6 +220,7 @@ As of now, everything I set out to do is functional, including stretch goals:
 - Joystick and Servo are hooked up and functional
 - UI for the Simulator in Raspberry Pi (using Cairo and Gtk windowing) is completed
 - Data Recorder is completed
+- Although it was not in my plan to add tests, I added some unit tests as well where it could be safely added.
 - The sensor inputs to the joystick, ADC and Servo are working. All sensors and actuators working. In the github repo, the 'joystick', 'servo' are standalone programs that work with Raspberry Pi. This part was done standalone but merged to the main project.
 - I also uploaded the current version of the cairo code and ImageTransform folder. ImageTransform folder is my experiments to eventually do a perspective scale on the image. This is very much Work in Progress (WIP). Test.htm file is a sample output from ImageTransform.
 
