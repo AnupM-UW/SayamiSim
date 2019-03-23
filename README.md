@@ -115,16 +115,21 @@ sudo apt-get install libgtk-3-dev
 #include <json/nlohmann_json.h>
 ```
 
+- Google Test library (see instructions at https://github.com/klavinslab/elma) for unit tests.
+
+- Other sundry dependencies listed in https://github.com/klavinslab/elma for Raspbian install of Elma also apply since we use the Elma library.
+
+
 Sensors/Actuators Used
 ---
 The project uses Raspberry Pi and sensors. The components used are:
-- Joystick (analog)
+- Joystick (analog) as position sensor
 - Analog to Digital Converter (ADC) - MCP3008
 - Servo (SG90)
 
-Hooking Up the Actuators
+Hooking Up the Sensors/Actuators
 ---
-The Joystick needs to be hooked up to the SPI pins on Raspberry Pi (there is only one SPI channel available on Raspberry Pi 3). Not only that, the SPI bus is not enabled by default and can be enabled from raspi-config app. Enabling the SPI bus is a tricky affair since it may not always work. However confirm that the files spidev0.0 and spidev0.1 files are present in /dev folder. Instructions to enable SPI on RPi are [here](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/) but I also found Derek Molloy's Programming Raspberry Pi book
+The Joystick needs to be hooked up to the SPI pins on Raspberry Pi (there is only one SPI channel available on Raspberry Pi 3). Not only that, the SPI bus is not enabled by default and can be enabled from raspi-config app. Enabling the SPI bus is a tricky affair since it may not always work. However confirm that the files spidev0.0 and spidev0.1 files are present in /dev folder. Instructions to enable SPI on RPi are [here](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/) but I also found Derek Molloy's "Exploring Raspberry Pi (Wiley)" book useful for explaining the details of the process.
 
 The Joystick is an analog device, and since RPi does not have an onboard analog to digital converter (ADC), it has to be digitized before the input is fed to the RPi. Several ADC are suitable for this task such as MCP3008 and MCP3208, or even MCP3004. I used MCP3008 for this exercise. It has a 10 bit ADC with 2^10 or 1024 levels of digital output. Value 1 indicates one extreme of the joystick movement in a particular axis and value 1023 the other. Using the Joystick coupled with the MCP3008 is no different that connecting any analog sensor such as an Light Dependent Resistor (LDR), or plant moisture sensor. [Here](https://www.raspberrypi-spy.co.uk/2013/10/analogue-sensors-on-the-raspberry-pi-using-an-mcp3008/) is an example with an LDR and [this](https://www.instructables.com/id/Wiring-up-a-MCP3008-ADC-to-a-Raspberry-Pi-model-B-/) is a plant moisture sensor. The pin assignments are essentially the same, but I didn't connect the joystick's SW switch since I didn't need it. Datasheet for MCP3008 is [here](https://cdn-shop.adafruit.com/datasheets/MCP3008.pdf). See below table for pinouts.
 
