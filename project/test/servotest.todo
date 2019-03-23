@@ -1,0 +1,40 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include "gtest/gtest.h"
+#include "../../elma_port/elma.h"
+#include "../servo.h"
+
+#ifdef _RPI_
+#include <json/nlohmann_json.h>
+#else
+#include <json/json.h>
+#endif
+
+using namespace std;
+using namespace elma;
+using json = nlohmann::json;
+
+    class SendEventProcess : public Process {
+        public:
+        SendEventProcess(string name) : Process(name) {}
+        void init() {}
+        void start() {}
+        void update() {
+            json j;
+            j["test"] = 5;
+            emit(Event("send_data", j));
+        }
+        void stop() {}
+    };
+
+    TEST(ServoTest, NormalizeTest) {
+        Servo s = Servo("Test servo");
+        EXPECT_EQ(s.normalize_servo_pos(0), 25);
+        EXPECT_EQ(s.normalize_servo_pos(0), 25);
+    }
+
+GTEST_API_ int main(int argc, char **argv) {
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

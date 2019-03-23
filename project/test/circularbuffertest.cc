@@ -39,7 +39,7 @@ TEST(CircularBuffer, RemoveItems) {
     string ret = buff.removeitem();
     EXPECT_EQ(buff.size(), 1);
     EXPECT_EQ(ret, "2");
-    string ret = buff.removeitem();
+    ret = buff.removeitem();
     EXPECT_EQ(buff.size(), 0);
     EXPECT_EQ(ret, "1");
     EXPECT_EQ(buff.isFull(), false);
@@ -98,8 +98,8 @@ TEST(CircularBuffer, OverEmptying) {
     EXPECT_EQ(buff.size(), 1);
     EXPECT_EQ(ret, "2");
     EXPECT_EQ(buff.isFull(), false);
-    EXPECT_EQ(buff.isEmpty(), true);
-    string ret = buff.removeitem();
+    EXPECT_EQ(buff.isEmpty(), false);
+    ret = buff.removeitem();
     EXPECT_EQ(buff.size(), 0);
     EXPECT_EQ(ret, "1");
     EXPECT_ANY_THROW(buff.removeitem());
@@ -115,6 +115,9 @@ TEST(CircularBuffer, Emptying) {
     string ret = buff.removeitem();
     EXPECT_EQ(buff.size(), 1);
     EXPECT_EQ(ret, "2");
+    ret = buff.removeitem();
+    EXPECT_EQ(buff.size(), 0);
+    EXPECT_EQ(ret, "1");
     EXPECT_EQ(buff.isFull(), false);
     EXPECT_EQ(buff.isEmpty(), true);
 }

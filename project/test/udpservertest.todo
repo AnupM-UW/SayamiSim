@@ -17,6 +17,7 @@ using json = nlohmann::json;
 
     class SendEventProcess : public Process {
         public:
+        SendEventProcess(string name) : Process(name) {}
         void init() {}
         void start() {}
         void update() {
@@ -27,8 +28,8 @@ using json = nlohmann::json;
         void stop() {}
     };
 
-    TEST(UDPCommunications, SendingDoesNotBlock) {
-        UDPCommunications comms = UDPCommunications("Test comms");
+    TEST(UDPCommunicationsTest, SendingDoesNotBlock) {
+        UDPCommunications comms = UDPCommunications("Test comms", "127.0.0.1", 45422);
         SendEventProcess sep = SendEventProcess("SEP");
         Manager m;
         m
@@ -40,7 +41,7 @@ using json = nlohmann::json;
         EXPECT_TRUE(comms.unprocessed_events().size() == 0);
     }
 
-    TEST(UDPCommunications, SendRecv) {
+    TEST(UDPCommunicationsTest, SendRecv) {
         UDPCommunications comms = UDPCommunications("Test comms");
         SendEventProcess sep = SendEventProcess("SEP");
 

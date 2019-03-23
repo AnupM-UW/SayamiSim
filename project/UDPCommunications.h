@@ -20,7 +20,7 @@
 using namespace elma;
 using namespace std::chrono;
 using namespace std;
-using json = nlohman::json;
+using json = nlohmann::json;
 
     class UDPCommunications : public Process {
         public:
